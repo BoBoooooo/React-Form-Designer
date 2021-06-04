@@ -1,0 +1,37 @@
+.fd-container{
+  height: 100%;
+  &-header{
+    background: #eaedf0;
+    padding: 0 10px;
+    border-bottom: 1px solid #bfbfbf;
+    display: flex;
+    position: relative;
+    align-items: center;
+    .logo{
+      width: 36px;
+      height: 36px;
+    }
+    .title{
+      font-size: 24px;
+      vertical-align: top;
+      margin-left: 10px;
+      font-weight: 500;
+      color: #595a5a;
+      line-height: 40px;
+      display: inline-block;
+    }
+  }
+  &-sider{
+    width: 20%;
+    max-width: 250px;
+    padding: 10px;
+    background: white;
+    overflow: auto;
+  }
+  &-content{
+    padding: 10px;
+    overflow: auto;
+    border-left: 1px solid #e0e0e0;
+    border-right: 1px solid #e0e0e0;
+  }
+}

@@ -1,0 +1,26 @@
+{
+  "name": "root",
+  "version": "0.1.0",
+  "description": "React From Designer",
+  "private": true,
+  "scripts": {
+    "install": "lerna bootstrap",
+    "start": "lerna run start --parallel",
+    "build": "lerna run build --parallel",
+    "clean": "lerna clean",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/BoBoooooo/React-Form-Designer.git"
+  },
+  "author": "BoBo <boboooooo159@gmail.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/BoBoooooo/React-Form-Designer/issues"
+  },
+  "homepage": "https://github.com/BoBoooooo/React-Form-Designer#readme",
+  "dependencies": {
+    "lerna": "^4.0.0"
+  }
+}
