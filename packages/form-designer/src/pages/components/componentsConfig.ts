@@ -9,7 +9,7 @@ import { Input, Select, Radio, TimePicker, DatePicker, TreeSelect, Cascader, Swi
 const { TextArea } = Input;
 
 // 基础组件
-export const basicComponents = [
+const basicComponents = [
   {
     type: 'Input',
     name: '单行文本',
@@ -273,28 +273,6 @@ export const basicComponents = [
     },
   },
   {
-    type: 'Text',
-    name: '文本',
-    icon: 'language',
-    options: {
-      defaultValue: '',
-      remoteFunc: '',
-      align: 'center',
-      fontSize: '16px',
-      hiddenLabel: false,
-    },
-  },
-  {
-    type: 'Html',
-    name: 'HTML',
-    icon: 'heading',
-    labelWidth: undefined,
-    options: {
-      html: null,
-      hiddenLabel: false,
-    },
-  },
-  {
     type: 'Cascader',
     name: '级联选择器',
     icon: 'random',
@@ -338,8 +316,6 @@ export const basicComponents = [
       hiddenLabel: false,
     },
   },
-  // 目前暂时提供了几个常用props,有更多需要自行拓展
-  // 官网:https://vue-treeselect.js.org
   {
     type: 'Treeselect',
     name: '树形下拉框',
@@ -397,33 +373,10 @@ export const basicComponents = [
       hiddenLabel: false,
     },
   },
-  {
-    type: 'richtext',
-    name: '富文本',
-    icon: 'text-width',
-    labelWidth: undefined,
-    hidden: false,
-    options: {
-      defaultValue: '',
-      readonly: false,
-      hiddenLabel: false,
-      required: false,
-    },
-  },
 ];
 
 // 高级组件
-export const advanceComponents = [
-  {
-    type: 'blank',
-    name: '自定义(插槽)',
-    icon: 'chalkboard',
-    labelWidth: undefined,
-    options: {
-      defaultType: 'String',
-      hiddenLabel: false,
-    },
-  },
+const advanceComponents = [
   {
     type: 'button',
     name: '按钮',
@@ -508,7 +461,7 @@ export const advanceComponents = [
 ];
 
 // 布局组件
-export const layoutComponents = [
+const layoutComponents = [
   {
     type: 'grid',
     name: '栅格布局',
@@ -574,72 +527,11 @@ export const layoutComponents = [
 ];
 
 // 图表组件
-export const chartComponents = [
-  {
-    type: 'chart-pie',
-    name: '饼图',
-    icon: 'chart-pie',
-    options: {
-      className: '',
-      width: '100%',
-      // title: '饼图',
-      option: '',
-      hiddenLabel: true,
-      hollow: true,
-      height: '300px',
-      data: [
-        {
-          name: '商品一',
-          value: '20',
-        },
-        {
-          name: '商品二',
-          value: '5',
-        },
-        {
-          name: '商品三',
-          value: '10',
-        },
-      ],
-    },
-  },
-  {
-    type: 'chart-line',
-    name: '柱状/折线图',
-    icon: 'chart-line',
-    options: {
-      className: '',
-      yAxisMax: null,
-      width: '100%',
-      type: 'bar',
-      // title: '饼图',
-      option: '',
-      rotate: false, // x,y轴互换
-      xUnit: '', // x轴单位
-      yUnit: '个', // y轴单位
-      hiddenLabel: true,
-      height: '400px',
-      data: [
-        {
-          name: '商品一',
-          value: '20',
-        },
-        {
-          name: '商品二',
-          value: '5',
-        },
-        {
-          name: '商品三',
-          value: '10',
-        },
-      ],
-    },
-  },
+const chartComponents = [
   {
     type: 'chart-common',
     name: '通用图表',
     icon: 'chart-bar',
-
     options: {
       className: '',
       height: '400px',
@@ -665,25 +557,24 @@ export const chartComponents = [
   },
 ];
 
-// 组件配置信息枚举
-export const elementComponentConfig = {
-  tabs: {
-    type: [
-      { label: '普通', value: '' },
-      { label: '选项卡', value: 'card' },
-      { label: '卡片化', value: 'border-card' },
-    ],
-    position: [
-      { label: '顶部', value: 'top' },
-      { label: '左侧', value: 'left' },
-      { label: '右侧', value: 'right' },
-      { label: '底部', value: 'bottom' },
-    ],
+export const components = [
+  {
+    label: '表单组件',
+    list: basicComponents,
   },
-};
-
-// 表单类组件枚举
-export const formElement = ['input', 'textarea', 'number', 'radio', 'checkbox', 'date', 'time', 'rate', 'color', 'select', 'switch', 'slider', 'cascader', 'treeselect', 'richtext'];
+  {
+    label: '高级/异步组件',
+    list: advanceComponents,
+  },
+  {
+    label: '布局组件',
+    list: layoutComponents,
+  },
+  {
+    label: '图表组件',
+    list: chartComponents,
+  },
+];
 
 export default {
   Input,

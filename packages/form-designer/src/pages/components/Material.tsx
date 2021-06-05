@@ -6,7 +6,7 @@
  */
 
 import React from 'react';
-import { basicComponents } from './componentsConfig';
+import { components } from './componentsConfig';
 import styles from '../../styles/material.module.scss';
 import { StarOutlined } from '@ant-design/icons';
 
@@ -19,15 +19,22 @@ export default function Material({ addWidget }) {
   };
   return (
     <div>
-      <div>
-        <div className={styles.title}>表单组件</div>
-        {basicComponents.map(com => (
-          <div key={com.type} className={styles.component} draggable id={'bform_component_' + com.type} onDragStart={ev => onDragStart(ev, com)} onClick={() => add(com)}>
-            <StarOutlined className={styles.icon} />
-            <span>{com.name}</span>
+      {components.map(com => {
+        return (
+          <div className={styles.wrapper}>
+            <div className={styles.title}>{com.label}</div>
+            {com.list.map(item => {
+              return (
+                <div key={item.type} className={styles.component} draggable id={'bform_component_' + item.type} onDragStart={ev => onDragStart(ev, item)} onClick={() => add(item)}>
+                  <StarOutlined className={styles.icon} />
+                  <span>{item.name}</span>
+                </div>
+              );
+            })}
           </div>
-        ))}
-      </div>
+        );
+      })}
+      <div></div>
     </div>
   );
 }

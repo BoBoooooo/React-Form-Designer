@@ -1,3 +1,6 @@
+.wrapper {
+  clear: both;
+}
 .title {
   padding: 8px 0;
   font-size: 13px;
@@ -22,6 +25,13 @@
     border: 1px dashed #247fea;
     cursor: move;
   }
+  &::after {
+    visibility: hidden;
+    content: '';
+    clear: both;
+    height: 0;
+  }
+
   .icon {
     margin: 0 5px;
   }
