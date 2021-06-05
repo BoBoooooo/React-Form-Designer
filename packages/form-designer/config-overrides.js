@@ -1,7 +1,6 @@
-
 // 重写打包后文件路径
-const path = require("path");
-const paths = require("react-scripts/config/paths");
+const path = require('path');
+const paths = require('react-scripts/config/paths');
 paths.appBuild = path.join(path.dirname(paths.appBuild));
 
 module.exports = {

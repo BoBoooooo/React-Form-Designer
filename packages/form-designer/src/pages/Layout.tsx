@@ -35,7 +35,7 @@ const App = () => {
       <Layout className={styles['fd-container']}>
         <Header className={styles['fd-container-header']}>
           <img src={logo} className={styles.logo} alt="logo" />
-          <span className={styles.title}> Form Generate </span>
+          <span className={styles.title}>BForm</span>
           <div className={styles['btn-bar']}>
             {handleBtns.map(btn => {
               return (
