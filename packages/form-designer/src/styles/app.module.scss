@@ -1,17 +1,19 @@
-.fd-container{
+.fd-container {
   height: 100%;
-  &-header{
+  &-header {
     background: #eaedf0;
     padding: 0 10px;
     border-bottom: 1px solid #bfbfbf;
     display: flex;
     position: relative;
     align-items: center;
-    .logo{
+    height: 54px;
+    line-height: 54px;
+    .logo {
       width: 36px;
       height: 36px;
     }
-    .title{
+    .title {
       font-size: 24px;
       vertical-align: top;
       margin-left: 10px;
@@ -20,15 +22,42 @@
       line-height: 40px;
       display: inline-block;
     }
+    .btn-bar {
+      position: absolute;
+      right: 0;
+      font-size: 18px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #666;
+      .button {
+        height: 100%;
+        padding: 9px;
+        margin: 0 10px;
+        line-height: 1;
+        font-size: 12px;
+        &.active {
+          background: #2d88f8 !important;
+          color: #fff !important;
+        }
+        &:hover {
+          color: #333;
+          cursor: pointer;
+        }
+      }
+      .icon {
+        display: block;
+        font-size: 18px;
+        margin-bottom: 8px;
+      }
+    }
   }
-  &-sider{
-    width: 20%;
-    max-width: 250px;
+  &-sider {
     padding: 10px;
     background: white;
     overflow: auto;
   }
-  &-content{
+  &-content {
     padding: 10px;
     overflow: auto;
     background: #fafafa;

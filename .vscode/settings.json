@@ -3,7 +3,7 @@
     "./packages/form-designer",
   ],
   "eslint.enable": true,
-  "editor.formatOnSave": false,
+  "editor.formatOnSave": true,
   "editor.codeActionsOnSave": {
     "source.fixAll.eslint": true
   },

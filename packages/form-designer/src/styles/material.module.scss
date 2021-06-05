@@ -1,0 +1,28 @@
+.title {
+  padding: 8px 0;
+  font-size: 13px;
+  font-weight: 700;
+  color: #2077ff;
+  text-align: left;
+}
+.component {
+  font-size: 12px;
+  text-align: left;
+  display: block;
+  width: 48%;
+  line-height: 26px;
+  float: left;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  margin: 1%;
+  color: #333;
+  border: 1px dashed #b9b9b9;
+  &:hover {
+    color: #247fea;
+    border: 1px dashed #247fea;
+    cursor: move;
+  }
+  .icon {
+    margin: 0 5px;
+  }
+}
