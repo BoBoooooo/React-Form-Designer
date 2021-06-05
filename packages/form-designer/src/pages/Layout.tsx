@@ -23,7 +23,9 @@ const App = () => {
           <Sider className={styles['fd-container-sider']} theme="light">
             物料库区域
           </Sider>
-          <Content className={styles['fd-container-content']}>Content</Content>
+          <Content className={styles['fd-container-content']}>
+            
+          </Content>
           <Sider className={styles['fd-container-sider']} theme="light">
             配置面板
           </Sider>
