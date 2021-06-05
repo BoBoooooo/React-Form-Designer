@@ -5,13 +5,22 @@
  * @Date: 2021-06-05 13:08:48
  */
 import React, { useState, useEffect } from 'react';
-import { Form, Tabs, Radio } from 'antd';
+import { Form, Tabs, Radio, InputNumber } from 'antd';
+
 type LayoutType = Parameters<typeof Form>[0]['layout'];
 
 const { TabPane } = Tabs;
 
 const PropConfig = () => {
-  return <div>字段属性</div>;
+  return (
+    <div
+      style={{
+        padding: '10px',
+      }}
+    >
+      字段属性
+    </div>
+  );
 };
 
 const FormConfig = ({ setWidgetForm, widgetForm }) => {
@@ -19,6 +28,7 @@ const FormConfig = ({ setWidgetForm, widgetForm }) => {
 
   const [formLayout, setFormLayout] = useState<LayoutType>(widgetForm.config.labelPosition);
   const [formSize, setFormSize] = useState<LayoutType>(widgetForm.config.size);
+  const [formLabelWidth, setFormLabelWidth] = useState<number>(widgetForm.config.labelWidth);
 
   // 更新标签位置
   useEffect(() => {
@@ -37,9 +47,19 @@ const FormConfig = ({ setWidgetForm, widgetForm }) => {
       return temp;
     });
   }, [formSize]);
+
+  // 更新表单尺寸
+  useEffect(() => {
+    setWidgetForm(value => {
+      const temp = { ...value };
+      temp.config.labelWidth = formLabelWidth;
+      return temp;
+    });
+  }, [formLabelWidth]);
+
   return (
-    <>
-      <Form layout="vertical" form={form}>
+    <div>
+      <Form layout="vertical" form={form} size="small">
         <Form.Item label="表单尺寸">
           <Radio.Group value={formSize} onChange={e => setFormSize(e.target.value)}>
             <Radio.Button value="small">Small</Radio.Button>
@@ -54,14 +74,21 @@ const FormConfig = ({ setWidgetForm, widgetForm }) => {
             <Radio.Button value="inline">Inline</Radio.Button>
           </Radio.Group>
         </Form.Item>
+        <Form.Item label="标签宽度">
+          <InputNumber min={80} max={200} defaultValue={formLabelWidth} onChange={e => setFormLabelWidth(e)} />
+        </Form.Item>
       </Form>
-    </>
+    </div>
   );
 };
 
 export default function Config(props) {
   return (
-    <div>
+    <div
+      style={{
+        padding: '0 10px',
+      }}
+    >
       <Tabs defaultActiveKey="1">
         <TabPane tab="字段属性" key="1">
           <PropConfig></PropConfig>

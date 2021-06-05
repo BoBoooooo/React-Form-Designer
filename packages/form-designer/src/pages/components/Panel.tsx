@@ -9,6 +9,7 @@ import form_empty from '../../assets/form_empty.svg';
 import styles from '../../styles/panel.module.scss';
 import { Form, Button } from 'antd';
 import WidgetFormItem from './WidgetFormItem';
+import { formJsonType } from '../../types/form.d';
 
 const Empty = () => {
   return (
@@ -26,7 +27,7 @@ const Empty = () => {
   );
 };
 
-const FormWrapper = ({ widgetForm }) => {
+const FormWrapper = ({ widgetForm }: { widgetForm: formJsonType }) => {
   const [form] = Form.useForm();
 
   const onFormChange = formValue => {
@@ -35,7 +36,14 @@ const FormWrapper = ({ widgetForm }) => {
 
   return (
     <>
-      <Form layout={widgetForm.config.labelPosition} size={widgetForm.config.size} form={form} initialValues={{}} onValuesChange={onFormChange}>
+      <Form
+        labelCol={{ style: { width: widgetForm.config.labelWidth } }}
+        layout={widgetForm.config.labelPosition}
+        size={widgetForm.config.size}
+        form={form}
+        initialValues={{}}
+        onValuesChange={onFormChange}
+      >
         {widgetForm.list.map(component => (
           <WidgetFormItem key={component.key} component={component}></WidgetFormItem>
         ))}
