@@ -8,7 +8,23 @@ import React from 'react';
 import form_empty from '../../assets/form_empty.svg';
 import styles from '../../styles/panel.module.scss';
 
-export default function Panel() {
+const Empty = () => {
+  return (
+    <div className={styles['form-empty']}>
+      <img
+        src={form_empty}
+        style={{
+          width: '16em',
+          height: '16em',
+        }}
+        alt="logo"
+      />
+      <span>拖拽 或 点击 添加组件至此处!</span>
+    </div>
+  );
+};
+
+export default function Panel(props) {
   const drop = ev => {
     ev.preventDefault();
     var data = ev.dataTransfer.getData('Text');
@@ -19,17 +35,8 @@ export default function Panel() {
   };
   return (
     <div className={styles.container} onDrop={drop} onDragOver={allowDrop}>
-      <div className={styles['form-empty']}>
-        <img
-          src={form_empty}
-          style={{
-            width: '16em',
-            height: '16em',
-          }}
-          alt="logo"
-        />
-        <span>拖拽 或 点击 添加组件至此处!</span>
-      </div>
+      {/* 表单没内容时显示暂无数据 */}
+      {props.widgetForm?.list?.length === 0 && <Empty></Empty>}
     </div>
   );
 }
