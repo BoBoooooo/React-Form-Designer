@@ -9,7 +9,7 @@ export interface formJsonType {
   list: any[];
   config: {
     labelWidth: number;
-    labelPosition: 'right' | 'top' | 'left';
-    columnList: any[];
+    labelPosition: 'horizontal' | 'vertical' | 'inline';
+    size: 'small' | 'middle' | 'large';
   };
 }

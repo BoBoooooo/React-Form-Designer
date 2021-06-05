@@ -4,11 +4,14 @@
  * @copyright: BoBo
  * @Date: 2021-06-05 12:18:34
  */
+import { Input, Select, Radio, TimePicker, DatePicker, TreeSelect, Cascader, Switch, Checkbox, InputNumber, Rate, Slider } from 'antd';
+
+const { TextArea } = Input;
 
 // 基础组件
 export const basicComponents = [
   {
-    type: 'input',
+    type: 'Input',
     name: '单行文本',
     labelWidth: undefined,
     hidden: false,
@@ -29,7 +32,7 @@ export const basicComponents = [
     },
   },
   {
-    type: 'textarea',
+    type: 'Textarea',
     name: '多行文本',
     icon: 'regular/keyboard',
     labelWidth: undefined,
@@ -48,7 +51,7 @@ export const basicComponents = [
     },
   },
   {
-    type: 'number',
+    type: 'InputNumber',
     name: '计数器',
     icon: 'sort-numeric-up',
     labelWidth: undefined,
@@ -66,7 +69,7 @@ export const basicComponents = [
     },
   },
   {
-    type: 'radio',
+    type: 'Radio',
     name: '单选框组',
     icon: 'regular/dot-circle',
     labelWidth: undefined,
@@ -103,7 +106,7 @@ export const basicComponents = [
     },
   },
   {
-    type: 'checkbox',
+    type: 'Checkbox',
     name: '多选框组',
     icon: 'regular/check-square',
     labelWidth: undefined,
@@ -140,7 +143,7 @@ export const basicComponents = [
     },
   },
   {
-    type: 'date',
+    type: 'DatePicker',
     name: '日期选择器',
     labelWidth: undefined,
     hidden: false,
@@ -163,7 +166,7 @@ export const basicComponents = [
     },
   },
   {
-    type: 'time',
+    type: 'TimePicker',
     name: '时间选择器',
     labelWidth: undefined,
     hidden: false,
@@ -201,21 +204,7 @@ export const basicComponents = [
     },
   },
   {
-    type: 'color',
-    name: '颜色选择器',
-    icon: 'palette',
-    labelWidth: undefined,
-    hidden: false,
-    options: {
-      hiddenLabel: false,
-      defaultValue: '',
-      disabled: false,
-      showAlpha: false,
-      required: false,
-    },
-  },
-  {
-    type: 'select',
+    type: 'Select',
     name: '下拉选择框',
     labelWidth: undefined,
     hidden: false,
@@ -252,7 +241,7 @@ export const basicComponents = [
     },
   },
   {
-    type: 'switch',
+    type: 'Switch',
     name: '开关',
     labelWidth: undefined,
     hidden: false,
@@ -265,7 +254,7 @@ export const basicComponents = [
     },
   },
   {
-    type: 'slider',
+    type: 'Slider',
     name: '滑块',
     icon: 'sliders-h',
     labelWidth: undefined,
@@ -284,7 +273,7 @@ export const basicComponents = [
     },
   },
   {
-    type: 'text',
+    type: 'Text',
     name: '文本',
     icon: 'language',
     options: {
@@ -296,7 +285,7 @@ export const basicComponents = [
     },
   },
   {
-    type: 'html',
+    type: 'Html',
     name: 'HTML',
     icon: 'heading',
     labelWidth: undefined,
@@ -306,7 +295,7 @@ export const basicComponents = [
     },
   },
   {
-    type: 'cascader',
+    type: 'Cascader',
     name: '级联选择器',
     icon: 'random',
     labelWidth: undefined,
@@ -352,7 +341,7 @@ export const basicComponents = [
   // 目前暂时提供了几个常用props,有更多需要自行拓展
   // 官网:https://vue-treeselect.js.org
   {
-    type: 'treeselect',
+    type: 'Treeselect',
     name: '树形下拉框',
     icon: 'tree',
     labelWidth: undefined,
@@ -695,3 +684,19 @@ export const elementComponentConfig = {
 
 // 表单类组件枚举
 export const formElement = ['input', 'textarea', 'number', 'radio', 'checkbox', 'date', 'time', 'rate', 'color', 'select', 'switch', 'slider', 'cascader', 'treeselect', 'richtext'];
+
+export default {
+  Input,
+  TextArea,
+  Select,
+  Radio,
+  TimePicker,
+  DatePicker,
+  TreeSelect,
+  Cascader,
+  Switch,
+  Checkbox,
+  InputNumber,
+  Rate,
+  Slider,
+};

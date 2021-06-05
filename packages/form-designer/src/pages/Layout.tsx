@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import logo from '../assets/logo.svg';
 import styles from '../styles/app.module.scss';
 // import { Link } from "dva/router";
@@ -28,8 +28,8 @@ const App = () => {
     list: [],
     config: {
       labelWidth: 140,
-      labelPosition: 'right',
-      columnList: [],
+      labelPosition: 'horizontal',
+      size: 'middle',
     },
   });
 
@@ -41,7 +41,9 @@ const App = () => {
       return temp;
     });
   };
-
+  useEffect(() => {
+    console.log('当前表单json', widgetForm);
+  }, [widgetForm]);
   const handleClone = (origin: any) => {
     const {
       type = 'type',
@@ -86,7 +88,7 @@ const App = () => {
             <Material addWidget={addWidget}></Material>
           </Sider>
           <Content className={styles['fd-container-content']}>
-            <Panel widgetForm={widgetForm}></Panel>
+            <Panel addWidget={addWidget} widgetForm={widgetForm}></Panel>
           </Content>
           <Sider
             width="250px"
@@ -96,7 +98,7 @@ const App = () => {
             }}
             theme="light"
           >
-            <Config></Config>
+            <Config widgetForm={widgetForm} setWidgetForm={setWidgetForm}></Config>
           </Sider>
         </Layout>
       </Layout>
