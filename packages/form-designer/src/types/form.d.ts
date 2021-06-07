@@ -11,5 +11,6 @@ export interface formJsonType {
     labelWidth: number;
     labelPosition: 'horizontal' | 'vertical' | 'inline';
     size: 'small' | 'middle' | 'large';
+    labelAlign: 'left' | 'right';
   };
 }

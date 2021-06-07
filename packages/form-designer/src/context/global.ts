@@ -20,6 +20,7 @@ export const FormContext = React.createContext<contextType>({
       labelWidth: 140,
       labelPosition: 'horizontal',
       size: 'middle',
+      labelAlign: 'right',
     },
   },
   setWidgetForm: () => {},

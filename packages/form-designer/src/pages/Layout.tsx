@@ -30,6 +30,7 @@ const App = () => {
       labelWidth: 140,
       labelPosition: 'horizontal',
       size: 'middle',
+      labelAlign: 'right',
     },
   });
 
