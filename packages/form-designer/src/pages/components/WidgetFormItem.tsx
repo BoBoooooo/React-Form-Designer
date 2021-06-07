@@ -9,14 +9,20 @@ import { Form } from 'antd';
 import AntdComs from './componentsConfig';
 
 export default function WidgetFormItem({ component }) {
-  // const handleSelect = () => {
-  //   console.log('选中', component);
-  // };
+  const handleSelect = e => {
+    console.log('选中', component);
+    e.preventDefault();
+  };
+
+  const getValuePropName = type => {
+    return type === 'Switch' ? 'checked' : '';
+  };
 
   return (
-    <Form.Item label={component.name} name={component.model}>
-      {/* <Input placeholder={component.options.placeholder}></Input> */}
-      {React.createElement(AntdComs[component.type], component.options)}
-    </Form.Item>
+    <div onClick={handleSelect}>
+      <Form.Item label={component.name} name={component.model} valuePropName={getValuePropName(component.type)}>
+        {React.createElement(AntdComs[component.type], component.options)}
+      </Form.Item>
+    </div>
   );
 }

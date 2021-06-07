@@ -24,7 +24,7 @@ export default function Material() {
     <div>
       {components.map(com => {
         return (
-          <div className={styles.wrapper}>
+          <div key={com.label} className={styles.wrapper}>
             <div className={styles.title}>{com.label}</div>
             {com.list.map(item => {
               return (
