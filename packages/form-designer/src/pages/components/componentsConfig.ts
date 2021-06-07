@@ -41,6 +41,7 @@ const basicComponents = [
       bordered: true,
       showCount: false,
       autoSize: false,
+      required: false,
       maxLength: null,
       placeholder: '',
     },
@@ -59,6 +60,7 @@ const basicComponents = [
       step: 1,
       disabled: false,
       readOnly: false,
+      required: false,
       // 字符值模式，开启后支持高精度小数。同时 onChange 将返回 string 类型
       stringMode: false,
     },
@@ -87,6 +89,7 @@ const basicComponents = [
       disabled: false,
       width: '100%',
       remote: 'static',
+      required: false,
       // 用于设置 Radio options 类型
       optionType: 'default',
     },
@@ -104,6 +107,7 @@ const basicComponents = [
     icon: 'regular/check-square',
     options: {
       disabled: false,
+      required: false,
       options: [
         {
           value: '选项1',
@@ -135,6 +139,7 @@ const basicComponents = [
     hidden: false,
     icon: 'regular/calendar-alt',
     options: {
+      required: false,
       bordered: true,
       allowClear: true,
       className: '',
@@ -156,6 +161,7 @@ const basicComponents = [
     icon: 'clock',
     options: {
       bordered: true,
+      required: false,
       allowClear: true,
       className: '',
       disabled: false,
@@ -177,6 +183,7 @@ const basicComponents = [
     labelWidth: undefined,
     hidden: false,
     options: {
+      required: false,
       className: '',
       allowClear: true,
       count: 5,
@@ -191,6 +198,7 @@ const basicComponents = [
     hidden: false,
     icon: 'regular/caret-square-down',
     options: {
+      required: false,
       allowClear: false,
       autoClearSearchValue: true,
       defaultActiveFirstOption: true,
@@ -239,6 +247,7 @@ const basicComponents = [
     hidden: false,
     icon: 'toggle-off',
     options: {
+      required: false,
       className: '',
       size: 'default', // default | small
       disabled: false,
@@ -253,6 +262,7 @@ const basicComponents = [
     labelWidth: undefined,
     hidden: false,
     options: {
+      required: false,
       allowClear: false,
       disabled: false,
       dots: false,
@@ -273,6 +283,7 @@ const basicComponents = [
     icon: 'random',
     labelWidth: undefined,
     options: {
+      required: false,
       width: '100%',
       className: '',
       placeholder: '',
@@ -322,6 +333,7 @@ const basicComponents = [
     icon: 'tree',
     labelWidth: undefined,
     options: {
+      required: false,
       allowClear: false,
       autoClearSearchValue: true,
       disabled: false,

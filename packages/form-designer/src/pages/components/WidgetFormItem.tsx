@@ -23,7 +23,13 @@ export default function WidgetFormItem({ component }) {
 
   return (
     <div onClick={handleSelect}>
-      <Form.Item labelAlign={widgetForm.config.labelAlign} label={component.name} name={component.model} valuePropName={getValuePropName(component.type)}>
+      <Form.Item
+        rules={[{ required: component.options.required }]}
+        labelAlign={widgetForm.config.labelAlign}
+        label={component.name}
+        name={component.model}
+        valuePropName={getValuePropName(component.type)}
+      >
         {React.createElement(AntdComs[component.type], component.options)}
       </Form.Item>
     </div>

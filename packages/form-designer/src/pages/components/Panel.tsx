@@ -7,7 +7,7 @@
 import React, { useContext } from 'react';
 import form_empty from '../../assets/form_empty.svg';
 import styles from '../../styles/panel.module.scss';
-import { Form, Button } from 'antd';
+import { Form, Button, Modal } from 'antd';
 import WidgetFormItem from './WidgetFormItem';
 import { formJsonType } from '../../types/form.d';
 import { FormContext } from '../../context/global';
@@ -31,6 +31,14 @@ const Empty = () => {
 const FormWrapper = ({ widgetForm }: { widgetForm: formJsonType }) => {
   const [form] = Form.useForm();
 
+  // 通过 Form 的 Submit监听 得到字段值
+  const onFinish = values => {
+    Modal.info({
+      title: '当前表单值为',
+      content: JSON.stringify(values),
+    });
+  };
+
   const onFormChange = formValue => {
     console.log('表单值为', formValue);
   };
@@ -44,12 +52,15 @@ const FormWrapper = ({ widgetForm }: { widgetForm: formJsonType }) => {
         form={form}
         initialValues={{}}
         onValuesChange={onFormChange}
+        onFinish={onFinish}
       >
         {widgetForm.list.map(component => (
           <WidgetFormItem key={component.key} component={component}></WidgetFormItem>
         ))}
         <Form.Item>
-          <Button type="primary">Submit</Button>
+          <Button type="primary" htmlType="submit">
+            Submit
+          </Button>
         </Form.Item>
       </Form>
     </>
