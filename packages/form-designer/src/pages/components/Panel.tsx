@@ -4,12 +4,13 @@
  * @copyright: BoBo
  * @Date: 2021-06-05 12:34:08
  */
-import React from 'react';
+import React, { useContext } from 'react';
 import form_empty from '../../assets/form_empty.svg';
 import styles from '../../styles/panel.module.scss';
 import { Form, Button } from 'antd';
 import WidgetFormItem from './WidgetFormItem';
 import { formJsonType } from '../../types/form.d';
+import { FormContext } from '../../context/global';
 
 const Empty = () => {
   return (
@@ -56,11 +57,13 @@ const FormWrapper = ({ widgetForm }: { widgetForm: formJsonType }) => {
 };
 
 export default function Panel(props) {
+  const { addWidget } = useContext(FormContext);
+
   const drop = ev => {
     ev.preventDefault();
     const data = JSON.parse(ev.dataTransfer.getData('Text'));
     console.log('拖拽物料至表单', data);
-    props.addWidget(data);
+    addWidget(data);
   };
 
   const allowDrop = ev => {

@@ -4,10 +4,9 @@
  * @copyright: BoBo
  * @Date: 2021-06-05 13:08:48
  */
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import { Form, Tabs, Radio, InputNumber } from 'antd';
-
-type LayoutType = Parameters<typeof Form>[0]['layout'];
+import { FormContext } from '../../context/global';
 
 const { TabPane } = Tabs;
 
@@ -23,39 +22,24 @@ const PropConfig = () => {
   );
 };
 
-const FormConfig = ({ setWidgetForm, widgetForm }) => {
+const FormConfig = () => {
+  const { widgetForm, setWidgetForm } = useContext(FormContext);
   const [form] = Form.useForm();
+  const [formLayout, setFormLayout] = useState(widgetForm.config.labelPosition);
+  const [formSize, setFormSize] = useState(widgetForm.config.size);
+  const [formLabelWidth, setFormLabelWidth] = useState(widgetForm.config.labelWidth);
 
-  const [formLayout, setFormLayout] = useState<LayoutType>(widgetForm.config.labelPosition);
-  const [formSize, setFormSize] = useState<LayoutType>(widgetForm.config.size);
-  const [formLabelWidth, setFormLabelWidth] = useState<number>(widgetForm.config.labelWidth);
-
-  // 更新标签位置
-  useEffect(() => {
-    setWidgetForm(value => {
-      const temp = { ...value };
-      temp.config.labelPosition = formLayout;
-      return temp;
-    });
-  }, [formLayout]);
-
-  // 更新表单尺寸
+  // 更新表单尺寸/标签位置/标签宽度
   useEffect(() => {
     setWidgetForm(value => {
       const temp = { ...value };
       temp.config.size = formSize;
-      return temp;
-    });
-  }, [formSize]);
-
-  // 更新表单尺寸
-  useEffect(() => {
-    setWidgetForm(value => {
-      const temp = { ...value };
+      temp.config.labelPosition = formLayout;
       temp.config.labelWidth = formLabelWidth;
+
       return temp;
     });
-  }, [formLabelWidth]);
+  }, [formSize, formLabelWidth, formLayout]);
 
   return (
     <div>

@@ -5,12 +5,15 @@
  * @Date: 2021-06-05 11:21:14
  */
 
-import React from 'react';
+import React, { useContext } from 'react';
 import { components } from './componentsConfig';
 import styles from '../../styles/material.module.scss';
 import { StarOutlined } from '@ant-design/icons';
+import { FormContext } from '../../context/global';
 
-export default function Material({ addWidget }) {
+export default function Material() {
+  const { addWidget } = useContext(FormContext);
+
   const onDragStart = (ev, com) => {
     ev.dataTransfer.setData('Text', JSON.stringify(com));
   };
