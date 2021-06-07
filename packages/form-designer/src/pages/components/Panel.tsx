@@ -42,7 +42,6 @@ const FormWrapper = (props: { widgetForm: formJsonType; selectedWidget: Record<s
   const onFormChange = formValue => {
     console.log('表单值为', formValue);
   };
-
   return (
     <>
       <Form
@@ -80,19 +79,28 @@ export default function Panel(props) {
   const drop = ev => {
     ev.preventDefault();
     const data = JSON.parse(ev.dataTransfer.getData('Text'));
+
     console.log('拖拽物料至表单', data);
+    ev.target.style['border-bottom'] = 'unset';
     addWidget(data);
   };
 
   const allowDrop = ev => {
+    if (ev.target.className.includes('widget-view')) {
+      ev.target.style['border-bottom'] = '3px solid purple';
+    }
+
     ev.preventDefault();
   };
 
-  const onDragEnter = () => {
-    // ev.target.style.background = 'purple';
+  const onDragLeave = ev => {
+    if (ev.target.className.includes('widget-view')) {
+      ev.target.style['border-bottom'] = 'unset';
+    }
   };
+
   return (
-    <div className={styles['widget-container']} onDrop={drop} onDragEnter={onDragEnter} onDragOver={allowDrop}>
+    <div className={styles['widget-container']} onDrop={drop} onDragOver={allowDrop} onDragLeave={onDragLeave}>
       {/* 表单没内容时显示暂无数据 */}
       {props.widgetForm.list?.length === 0 ? <Empty></Empty> : <FormWrapper {...props}></FormWrapper>}
     </div>

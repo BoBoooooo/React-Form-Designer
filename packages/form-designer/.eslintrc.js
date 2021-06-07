@@ -1,10 +1,7 @@
 module.exports = {
   root: true,
   env: {
-    node: true
+    node: true,
   },
-  extends: [
-    "react-app",
-    "plugin:prettier/recommended"
-  ],
-}
+  extends: ['react-app', 'plugin:prettier/recommended'],
+};

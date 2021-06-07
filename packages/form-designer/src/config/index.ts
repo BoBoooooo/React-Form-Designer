@@ -8,30 +8,33 @@
 export const handleBtns = [
   {
     label: '布局模式',
-    icon: 'StarOutlined',
+    icon: 'BgColorsOutlined',
   },
   {
     label: '预览模式',
-    icon: 'StarOutlined',
+    icon: 'SearchOutlined',
+    divider: true,
   },
   {
     label: '导入JSON',
-    icon: 'StarOutlined',
+    icon: 'CloudUploadOutlined',
   },
   {
     label: '生成JSON',
-    icon: 'StarOutlined',
+    icon: 'CloudDownloadOutlined',
+    script: 'handleGenerateJson',
   },
   {
     label: '生成代码',
-    icon: 'StarOutlined',
+    icon: 'CodeSandboxOutlined',
   },
   {
     label: '清空',
     icon: 'StarOutlined',
+    script: 'ClearOutlined',
   },
   {
     label: '自动绑定',
-    icon: 'StarOutlined',
+    icon: 'TagOutlined',
   },
 ];

@@ -30,6 +30,10 @@
       align-items: center;
       justify-content: center;
       color: #666;
+      .divider {
+        height: 18px !important;
+        border-left: 1px solid #333 !important;
+      }
       .button {
         height: 100%;
         padding: 9px;

@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import logo from '../assets/logo.svg';
 import styles from '../styles/app.module.scss';
-import { Layout } from 'antd';
+import { Divider, Layout, message, Modal } from 'antd';
 import Material from './components/Material';
 import Panel from './components/Panel';
 import WidgetConfig from './components/WidgetConfig';
-import { StarOutlined } from '@ant-design/icons';
+import * as Icon from '@ant-design/icons';
 import { handleBtns } from '../config';
 import { widgetClone } from '../utils/form';
 import { formJsonType } from '../types/form.d';
@@ -16,10 +16,34 @@ const { Header, Sider, Content } = Layout;
 export const AppContext = React.createContext({ content: '' });
 
 const App = () => {
-  // 设计器初始值
-
-  const handleAction = () => {
-    console.log('暂未开发');
+  // 操作按钮
+  const handleAction = btn => {
+    switch (btn.script) {
+      case 'handleGenerateJson':
+        Modal.success({
+          title: '生成JSON',
+          maskClosable: true,
+          width: '50%',
+          content: JSON.stringify(widgetForm),
+        });
+        break;
+      case 'handleClear':
+        handleClear();
+        message.success('清空成功');
+        break;
+      default:
+        message.info('开发中!!!');
+        break;
+    }
+  };
+  // 清空按钮
+  const handleClear = () => {
+    setWidgetForm(value => {
+      const temp = { ...value };
+      temp.list = [];
+      return temp;
+    });
+    setSelectedWidget({});
   };
 
   // 初始化formJSON数据
@@ -82,10 +106,15 @@ const App = () => {
           <div className={styles['btn-bar']}>
             {handleBtns.map(btn => {
               return (
-                <div key={btn.label} className={styles.button} onClick={handleAction}>
-                  <StarOutlined className={styles.icon} />
-                  <span>{btn.label}</span>
-                </div>
+                <>
+                  <div key={btn.label} className={styles.button} onClick={() => handleAction(btn)}>
+                    {React.createElement(Icon[btn.icon], {
+                      className: styles.icon,
+                    })}
+                    <span>{btn.label}</span>
+                  </div>
+                  {btn.divider && <Divider type="vertical" className={styles.divider} />}
+                </>
               );
             })}
           </div>

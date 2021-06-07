@@ -36,6 +36,10 @@ const PropConfig = ({ setSelectedWidget, selectedWidget }) => {
       options?: object;
       [key: string]: any;
     } = JSON.parse(JSON.stringify(selectedWidget)) || {};
+    if (Object.keys(value).length === 0) {
+      form.resetFields();
+      return;
+    }
     Object.keys(value.options || {}).forEach(option => {
       value['option_' + option] = (value.options || {})[option];
     });
