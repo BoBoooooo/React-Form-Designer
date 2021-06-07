@@ -28,9 +28,9 @@ const Empty = () => {
   );
 };
 
-const FormWrapper = ({ widgetForm }: { widgetForm: formJsonType }) => {
+const FormWrapper = (props: { widgetForm: formJsonType; selectedWidget: Record<string, any>; setSelectedWidget: Function }) => {
   const [form] = Form.useForm();
-
+  const { widgetForm } = props;
   // 通过 Form 的 Submit监听 得到字段值
   const onFinish = values => {
     Modal.info({
@@ -55,9 +55,16 @@ const FormWrapper = ({ widgetForm }: { widgetForm: formJsonType }) => {
         onFinish={onFinish}
       >
         {widgetForm.list.map(component => (
-          <WidgetFormItem key={component.key} component={component}></WidgetFormItem>
+          <WidgetFormItem key={component.key} component={component} {...props}></WidgetFormItem>
         ))}
-        <Form.Item>
+        <Form.Item
+          wrapperCol={{
+            offset: 22,
+          }}
+          style={{
+            textAlign: 'right',
+          }}
+        >
           <Button type="primary" htmlType="submit">
             Submit
           </Button>
@@ -85,7 +92,7 @@ export default function Panel(props) {
     // ev.target.style.background = 'purple';
   };
   return (
-    <div className={styles.container} onDrop={drop} onDragEnter={onDragEnter} onDragOver={allowDrop}>
+    <div className={styles['widget-container']} onDrop={drop} onDragEnter={onDragEnter} onDragOver={allowDrop}>
       {/* 表单没内容时显示暂无数据 */}
       {props.widgetForm.list?.length === 0 ? <Empty></Empty> : <FormWrapper {...props}></FormWrapper>}
     </div>

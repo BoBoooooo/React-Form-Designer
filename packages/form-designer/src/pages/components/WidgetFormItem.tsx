@@ -8,12 +8,15 @@ import React, { useContext } from 'react';
 import { Form } from 'antd';
 import AntdComs from './componentsConfig';
 import { FormContext } from '../../context/global';
+import styles from '../../styles/panel.module.scss';
 
-export default function WidgetFormItem({ component }) {
+export default function WidgetFormItem({ component, setSelectedWidget }) {
   const { widgetForm } = useContext(FormContext);
 
   const handleSelect = e => {
+    setSelectedWidget(component);
     console.log('选中', component);
+
     e.preventDefault();
   };
 
@@ -22,7 +25,7 @@ export default function WidgetFormItem({ component }) {
   };
 
   return (
-    <div onClick={handleSelect}>
+    <div onClick={handleSelect} className={styles['widget-view']}>
       <Form.Item
         rules={[{ required: component.options.required }]}
         labelAlign={widgetForm.config.labelAlign}
@@ -32,6 +35,9 @@ export default function WidgetFormItem({ component }) {
       >
         {React.createElement(AntdComs[component.type], component.options)}
       </Form.Item>
+      <div className={styles['widget-view-model']}>
+        <span>{component.model}</span>
+      </div>
     </div>
   );
 }

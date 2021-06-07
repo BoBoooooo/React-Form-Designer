@@ -1,11 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import logo from '../assets/logo.svg';
 import styles from '../styles/app.module.scss';
-import { connect } from 'dva';
 import { Layout } from 'antd';
 import Material from './components/Material';
 import Panel from './components/Panel';
-import Config from './components/Config';
+import WidgetConfig from './components/WidgetConfig';
 import { StarOutlined } from '@ant-design/icons';
 import { handleBtns } from '../config';
 import { widgetClone } from '../utils/form';
@@ -34,20 +33,36 @@ const App = () => {
     },
   });
 
+  const [selectedWidget, setSelectedWidget] = useState<Record<string, any>>({});
+
   // 添加物料到画板区域
   const addWidget = (item: any) => {
-    console.log('add', item);
+    const widget = widgetClone(item);
+    console.log('add', widget);
     setWidgetForm(value => {
       const temp = { ...value };
-      temp.list.push(widgetClone(item));
+      temp.list.push(widget);
       return temp;
     });
+    setSelectedWidget(widget);
   };
 
   // 表单JSON改变回调
   useEffect(() => {
     console.log('当前表单json', widgetForm);
   }, [widgetForm]);
+
+  // 表单JSON改变回调
+  useEffect(() => {
+    if (selectedWidget && Object.keys(selectedWidget).length > 0) {
+      setWidgetForm(value => {
+        let temp = { ...value };
+        const index = temp.list.findIndex(_ => _.key === selectedWidget.key);
+        temp.list[index] = selectedWidget;
+        return temp;
+      });
+    }
+  }, [selectedWidget]);
 
   return (
     // 全局注入表单json 设置表单json 添加物料方法
@@ -83,7 +98,7 @@ const App = () => {
           </Sider>
           {/* 设计面板 */}
           <Content className={styles['fd-container-content']}>
-            <Panel addWidget={addWidget} widgetForm={widgetForm}></Panel>
+            <Panel addWidget={addWidget} widgetForm={widgetForm} selectedWidget={selectedWidget} setSelectedWidget={setSelectedWidget}></Panel>
           </Content>
           {/* 配置区域 */}
           <Sider
@@ -94,7 +109,7 @@ const App = () => {
             }}
             theme="light"
           >
-            <Config></Config>
+            <WidgetConfig selectedWidget={selectedWidget} setSelectedWidget={setSelectedWidget}></WidgetConfig>
           </Sider>
         </Layout>
       </Layout>
@@ -102,6 +117,4 @@ const App = () => {
   );
 };
 
-export default connect(({ app }) => ({
-  app,
-}))(App);
+export default App;
