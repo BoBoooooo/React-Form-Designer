@@ -36,6 +36,23 @@ $primary-background-color: #ecf5ff;
       z-index: 9;
       font-weight: 500;
     }
+    .widget-view-drag {
+      position: absolute;
+      left: 0px;
+      top: 0px;
+      color: white;
+      box-sizing: border-box;
+      padding: 0px 5px;
+      font-size: 18px;
+      background: #247fea;
+      z-index: 9;
+      i {
+        color: #fff;
+        font-weight: 500;
+        margin: 0 5px;
+        cursor: move;
+      }
+    }
     &:hover {
       background: $primary-background-color;
       outline: 1px solid $primary-color;

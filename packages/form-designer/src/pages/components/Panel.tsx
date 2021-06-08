@@ -56,6 +56,7 @@ const FormWrapper = (props: { widgetForm: formJsonType; selectedWidget: Record<s
         {widgetForm.list.map(component => (
           <WidgetFormItem key={component.key} component={component} {...props}></WidgetFormItem>
         ))}
+        {/* Submit按钮 */}
         <Form.Item
           wrapperCol={{
             offset: 22,
@@ -65,7 +66,7 @@ const FormWrapper = (props: { widgetForm: formJsonType; selectedWidget: Record<s
           }}
         >
           <Button type="primary" htmlType="submit">
-            Submit
+            获取表单值
           </Button>
         </Form.Item>
       </Form>

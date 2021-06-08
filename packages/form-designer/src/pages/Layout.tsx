@@ -104,7 +104,7 @@ const App = () => {
           <span className={styles.title}>BForm</span>
           {/* 操作按钮 */}
           <div className={styles['btn-bar']}>
-            {handleBtns.map(btn => {
+            {handleBtns.map((btn, index) => {
               return (
                 <>
                   <div key={btn.label} className={styles.button} onClick={() => handleAction(btn)}>
@@ -113,7 +113,7 @@ const App = () => {
                     })}
                     <span>{btn.label}</span>
                   </div>
-                  {btn.divider && <Divider type="vertical" className={styles.divider} />}
+                  {btn.divider && <Divider key={index} type="vertical" className={styles.divider} />}
                 </>
               );
             })}

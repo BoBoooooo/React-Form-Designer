@@ -9,8 +9,9 @@ import { Form } from 'antd';
 import AntdComs from './componentsConfig';
 import { FormContext } from '../../context/global';
 import styles from '../../styles/panel.module.scss';
+import { DragOutlined } from '@ant-design/icons';
 
-export default function WidgetFormItem({ component, setSelectedWidget }) {
+export default function WidgetFormItem({ component, setSelectedWidget, selectedWidget }) {
   const { widgetForm } = useContext(FormContext);
 
   const handleSelect = e => {
@@ -25,7 +26,7 @@ export default function WidgetFormItem({ component, setSelectedWidget }) {
   };
 
   return (
-    <div onClick={handleSelect} className={styles['widget-view']}>
+    <div onClick={handleSelect} className={[styles['widget-view'], component.key === selectedWidget.key ? styles.active : null].join(' ')}>
       <Form.Item
         rules={[{ required: component.options.required }]}
         labelAlign={widgetForm.config.labelAlign}
@@ -35,9 +36,16 @@ export default function WidgetFormItem({ component, setSelectedWidget }) {
       >
         {React.createElement(AntdComs[component.type], component.options)}
       </Form.Item>
+      {/* 右上角model显示 */}
       <div className={styles['widget-view-model']}>
         <span>{component.model}</span>
       </div>
+      {/* 左上角可拖拽按钮 */}
+      {component.key === selectedWidget.key && (
+        <div className={styles['widget-view-drag']}>
+          <DragOutlined />
+        </div>
+      )}
     </div>
   );
 }
