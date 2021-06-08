@@ -1,0 +1,57 @@
+// 一些快捷工具类样式
+.full-width {
+  width: 100%;
+}
+.full-height {
+  height: 100%;
+}
+.full-size {
+  @extend .full-height;
+  @extend .full-width;
+}
+
+.children-float-left {
+  > * {
+    float: left;
+  }
+}
+
+.text-space-between {
+  //文字两端分散对其（在火狐浏览器上若不生效，在div上添加属性 lang="zh" 即可）
+  text-align-last: justify;
+  text-align: justify;
+  text-justify: distribute-all-lines; // 这行必加，兼容ie浏览器
+}
+
+.text-ellipsis {
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+//例：class="clear-both"
+@each $position in left, right, both, none {
+  .clear-#{$position} {
+    &:after {
+      content: '';
+      display: block;
+      height: 0;
+      width: 0;
+      clear: #{$position};
+    }
+  }
+}
+
+/*
+例:mt-10=> margin-right:10px;
+
+*/
+@each $type, $type-name in (margin, m), (padding, p) {
+  @each $position, $position-name in ('-top', t), ('-bottom', b), ('-left', l), ('-right', r), ('', '') {
+    @for $i from 0 through 30 {
+      .#{$type-name}#{$position-name}-#{$i} {
+        #{$type}#{$position}: #{$i}px;
+      }
+    }
+  }
+}

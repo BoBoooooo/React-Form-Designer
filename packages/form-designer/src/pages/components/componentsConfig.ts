@@ -17,7 +17,7 @@ const basicComponents = [
     name: '单行文本',
     labelWidth: undefined,
     hidden: false,
-    icon: 'regular/keyboard',
+    icon: 'FontSizeOutlined',
     options: {
       allowClear: true,
       bordered: true,
@@ -32,7 +32,7 @@ const basicComponents = [
   {
     type: 'TextArea',
     name: '多行文本',
-    icon: 'regular/keyboard',
+    icon: 'FontSizeOutlined',
     labelWidth: undefined,
     hidden: false,
     options: {
@@ -49,7 +49,7 @@ const basicComponents = [
   {
     type: 'InputNumber',
     name: '计数器',
-    icon: 'sort-numeric-up',
+    icon: 'OrderedListOutlined',
     labelWidth: undefined,
     hidden: false,
     options: {
@@ -68,7 +68,7 @@ const basicComponents = [
   {
     type: 'RadioGroup',
     name: '单选框组',
-    icon: 'regular/dot-circle',
+    icon: 'AimOutlined',
     labelWidth: undefined,
     hidden: false,
     options: {
@@ -104,7 +104,7 @@ const basicComponents = [
   {
     type: 'CheckboxGroup',
     name: '多选框组',
-    icon: 'regular/check-square',
+    icon: 'CheckSquareOutlined',
     options: {
       disabled: false,
       required: false,
@@ -137,7 +137,7 @@ const basicComponents = [
     name: '日期选择器',
     labelWidth: undefined,
     hidden: false,
-    icon: 'regular/calendar-alt',
+    icon: 'CalendarOutlined',
     options: {
       required: false,
       bordered: true,
@@ -158,7 +158,7 @@ const basicComponents = [
     name: '时间选择器',
     labelWidth: undefined,
     hidden: false,
-    icon: 'clock',
+    icon: 'ClockCircleOutlined',
     options: {
       bordered: true,
       required: false,
@@ -179,7 +179,7 @@ const basicComponents = [
   {
     type: 'Rate',
     name: '评分',
-    icon: 'regular/star',
+    icon: 'StarOutlined',
     labelWidth: undefined,
     hidden: false,
     options: {
@@ -196,7 +196,7 @@ const basicComponents = [
     name: '下拉选择框',
     labelWidth: undefined,
     hidden: false,
-    icon: 'regular/caret-square-down',
+    icon: 'BarsOutlined',
     options: {
       required: false,
       allowClear: false,
@@ -245,7 +245,7 @@ const basicComponents = [
     name: '开关',
     labelWidth: undefined,
     hidden: false,
-    icon: 'toggle-off',
+    icon: 'SwapOutlined',
     options: {
       required: false,
       className: '',
@@ -258,7 +258,7 @@ const basicComponents = [
   {
     type: 'Slider',
     name: '滑块',
-    icon: 'sliders-h',
+    icon: 'NodeExpandOutlined',
     labelWidth: undefined,
     hidden: false,
     options: {
@@ -280,7 +280,7 @@ const basicComponents = [
   {
     type: 'Cascader',
     name: '级联选择器',
-    icon: 'random',
+    icon: 'PartitionOutlined',
     labelWidth: undefined,
     options: {
       required: false,
@@ -330,7 +330,7 @@ const basicComponents = [
   {
     type: 'TreeSelect',
     name: '树形下拉框',
-    icon: 'tree',
+    icon: 'ApartmentOutlined',
     labelWidth: undefined,
     options: {
       required: false,
@@ -382,7 +382,7 @@ const advanceComponents = [
   {
     type: 'Button',
     name: '按钮',
-    icon: 'mouse-pointer',
+    icon: 'BorderOutlined',
     labelWidth: undefined,
     hidden: false,
     options: {
@@ -395,7 +395,7 @@ const advanceComponents = [
   {
     type: 'Upload',
     name: '附件',
-    icon: 'upload',
+    icon: 'UploadOutlined',
     labelWidth: undefined,
     options: {
       resourceId: 'id',
@@ -409,7 +409,7 @@ const advanceComponents = [
   {
     type: 'Avatar',
     name: '头像',
-    icon: 'user',
+    icon: 'UserOutlined',
     labelWidth: undefined,
     options: {
       resourceId: 'id',
@@ -421,7 +421,7 @@ const advanceComponents = [
   {
     type: 'Table',
     name: '子表格',
-    icon: 'table',
+    icon: 'TableOutlined',
     labelWidth: undefined,
     options: {
       remoteFunc: '',
@@ -448,7 +448,7 @@ const advanceComponents = [
   {
     type: 'Form',
     name: '子表单',
-    icon: 'file-word',
+    icon: 'DiffOutlined',
     labelWidth: undefined,
     tableColumns: [],
     options: {
@@ -467,7 +467,7 @@ const layoutComponents = [
   {
     type: 'Grid',
     name: '栅格布局',
-    icon: 'th',
+    icon: 'BorderOuterOutlined',
     columns: [
       {
         span: 24,
@@ -483,7 +483,7 @@ const layoutComponents = [
   {
     type: 'grid-table',
     name: '表格布局',
-    icon: 'table',
+    icon: 'TableOutlined',
     beta: true,
     options: {
       borderWidth: 1,
@@ -501,7 +501,7 @@ const layoutComponents = [
   {
     type: 'Tabs',
     name: '标签页',
-    icon: 'tags',
+    icon: 'TagsOutlined',
     beta: true,
     items: [
       {
@@ -519,7 +519,7 @@ const layoutComponents = [
   {
     type: 'Divider',
     name: '分割线',
-    icon: 'divide',
+    icon: 'MinusOutlined',
     labelWidth: undefined,
     options: {
       align: 'center',
@@ -533,7 +533,7 @@ const chartComponents = [
   {
     type: 'chart-common',
     name: '通用图表',
-    icon: 'chart-bar',
+    icon: 'PieChartOutlined',
     options: {
       className: '',
       height: '400px',

@@ -60,12 +60,17 @@ const App = () => {
   const [selectedWidget, setSelectedWidget] = useState<Record<string, any>>({});
 
   // 添加物料到画板区域
-  const addWidget = (item: any) => {
+  const addWidget = (item: any, dragIndex: number | undefined) => {
     const widget = widgetClone(item);
-    console.log('add', widget);
+    console.log('add', widget, dragIndex);
     setWidgetForm(value => {
       const temp = { ...value };
-      temp.list.push(widget);
+      // 如果中间区域是空或者是直接点击物料,默认加到list尾部
+      if (dragIndex === -1 || dragIndex === undefined) {
+        temp.list.push(widget);
+      } else {
+        temp.list.splice(dragIndex + 1, 0, widget);
+      }
       return temp;
     });
     setSelectedWidget(widget);

@@ -1,5 +1,7 @@
 .wrapper {
   clear: both;
+  overflow: hidden;
+  margin-bottom: 10px;
 }
 .title {
   padding: 8px 0;
@@ -17,6 +19,7 @@
   float: left;
   text-overflow: ellipsis;
   white-space: nowrap;
+  font-family: 'PingFang SC';
   margin: 1%;
   color: #333;
   border: 1px dashed #b9b9b9;
@@ -33,6 +36,7 @@
   }
 
   .icon {
-    margin: 0 5px;
+    margin: 0 10px;
+    font-size: 14px;
   }
 }

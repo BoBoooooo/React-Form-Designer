@@ -53,6 +53,7 @@ const FormWrapper = (props: { widgetForm: formJsonType; selectedWidget: Record<s
           style={{
             textAlign: 'right',
           }}
+          className="mt-20"
         >
           <Button type="primary" htmlType="submit">
             获取表单值
@@ -69,23 +70,27 @@ export default function Panel(props) {
   const drop = ev => {
     ev.preventDefault();
     const data = JSON.parse(ev.dataTransfer.getData('Text'));
+    let dragIndex;
 
-    console.log('拖拽物料至表单', data);
-    ev.target.style['border-bottom'] = 'unset';
-    addWidget(data);
+    if (ev.target.className.includes('widget-view')) {
+      // 查找当前拖拽到的索引位置
+      dragIndex = [].indexOf.call(ev.target.parentElement.children, ev.target as never);
+      console.log('拖拽物料至表单', data, dragIndex);
+      ev.target.style['border-bottom'] = '1px dashed rgba(170, 170, 170, 0.7)';
+    }
+    addWidget(data, dragIndex);
   };
 
   const allowDrop = ev => {
     if (ev.target.className.includes('widget-view')) {
-      ev.target.style['border-bottom'] = '3px solid purple';
+      ev.target.style['border-bottom'] = '3px solid #389e0d';
     }
-
     ev.preventDefault();
   };
 
   const onDragLeave = ev => {
     if (ev.target.className.includes('widget-view')) {
-      ev.target.style['border-bottom'] = 'unset';
+      ev.target.style['border-bottom'] = '1px dashed rgba(170, 170, 170, 0.7)';
     }
   };
 

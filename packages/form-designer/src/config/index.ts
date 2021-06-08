@@ -31,7 +31,7 @@ export const handleBtns = [
   {
     label: '清空',
     icon: 'StarOutlined',
-    script: 'ClearOutlined',
+    script: 'handleClear',
   },
   {
     label: '自动绑定',

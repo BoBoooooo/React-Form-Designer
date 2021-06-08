@@ -8,8 +8,8 @@
 import React, { useContext } from 'react';
 import { components } from './componentsConfig';
 import styles from '../../styles/material.module.scss';
-import { StarOutlined } from '@ant-design/icons';
 import { FormContext } from '../../context/global';
+import * as Icon from '@ant-design/icons';
 
 export default function Material() {
   const { addWidget } = useContext(FormContext);
@@ -29,7 +29,9 @@ export default function Material() {
             {com.list.map(item => {
               return (
                 <div key={item.type} className={styles.component} draggable id={'bform_component_' + item.type} onDragStart={ev => onDragStart(ev, item)} onClick={() => add(item)}>
-                  <StarOutlined className={styles.icon} />
+                  {React.createElement(Icon[item.icon], {
+                    className: styles.icon,
+                  })}
                   <span>{item.name}</span>
                 </div>
               );
