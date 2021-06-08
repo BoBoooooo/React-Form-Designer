@@ -11,6 +11,7 @@ import { Form, Button, Modal } from 'antd';
 import WidgetFormItem from './WidgetFormItem';
 import { formJsonType } from '../../types/form.d';
 import { FormContext } from '../../context/global';
+import WidgetLayout from './WidgetLayout';
 
 const Empty = () => {
   return (
@@ -42,9 +43,13 @@ const WidgetForm = (props: { widgetForm: formJsonType; selectedWidget: Record<st
   return (
     <>
       <Form labelCol={{ style: { width: widgetForm.config.labelWidth } }} layout={widgetForm.config.labelPosition} size={widgetForm.config.size} form={form} initialValues={{}} onFinish={onFinish}>
-        {widgetForm.list.map((component, index) => (
-          <WidgetFormItem key={component.key} index={index} component={component} {...props}></WidgetFormItem>
-        ))}
+        {widgetForm.list.map((component, index) => {
+          if (component.type === 'Row') {
+            return <WidgetLayout key={component.key} index={index} component={component} {...props}></WidgetLayout>;
+          } else {
+            return <WidgetFormItem key={component.key} index={index} component={component} {...props}></WidgetFormItem>;
+          }
+        })}
         {/* Submit按钮 */}
         <Form.Item
           wrapperCol={{

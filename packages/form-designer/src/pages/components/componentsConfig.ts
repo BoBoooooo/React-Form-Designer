@@ -471,7 +471,7 @@ const layoutComponents = [
     icon: 'BorderOuterOutlined',
     columns: [
       {
-        span: 24,
+        span: 6,
         list: [],
       },
     ],

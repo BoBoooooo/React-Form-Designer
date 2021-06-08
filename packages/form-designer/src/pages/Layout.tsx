@@ -149,17 +149,17 @@ const App = () => {
           <span className={styles.title}>BForm</span>
           {/* 操作按钮 */}
           <div className={styles['btn-bar']}>
-            {handleBtns.map((btn, index) => {
+            {handleBtns.map(btn => {
               return (
-                <>
-                  <div key={btn.label} className={[styles.button, status === btn.mode ? styles.active : null].join(' ')} onClick={() => handleAction(btn)}>
+                <React.Fragment key={btn.label}>
+                  <div className={[styles.button, status === btn.mode ? styles.active : null].join(' ')} onClick={() => handleAction(btn)}>
                     {React.createElement(Icon[btn.icon], {
                       className: styles.icon,
                     })}
                     <span>{btn.label}</span>
                   </div>
-                  {btn.divider && <Divider key={index} type="vertical" className={styles.divider} />}
-                </>
+                  {btn.divider && <Divider type="vertical" className={styles.divider} />}
+                </React.Fragment>
               );
             })}
           </div>
