@@ -31,6 +31,14 @@ const App = () => {
         handleClear();
         message.success('清空成功');
         break;
+      case 'changeModeToEdit':
+        setStatus('edit');
+        message.success('已切换至布局模式');
+        break;
+      case 'changeModeToPreview':
+        setStatus('preview');
+        message.success('已切换至预览模式');
+        break;
       default:
         message.info('开发中!!!');
         break;
@@ -58,6 +66,8 @@ const App = () => {
   });
 
   const [selectedWidget, setSelectedWidget] = useState<Record<string, any>>({});
+
+  const [status, setStatus] = useState<'edit' | 'preview'>('edit');
 
   // 添加物料到画板区域
   const addWidget = (item: any, dragIndex: number | undefined) => {
@@ -124,6 +134,7 @@ const App = () => {
     // 全局注入表单json 设置表单json 添加物料方法
     <GlobalContext.Provider
       value={{
+        status,
         widgetForm,
         setWidgetForm,
         addWidget,
@@ -141,7 +152,7 @@ const App = () => {
             {handleBtns.map((btn, index) => {
               return (
                 <>
-                  <div key={btn.label} className={styles.button} onClick={() => handleAction(btn)}>
+                  <div key={btn.label} className={[styles.button, status === btn.mode ? styles.active : null].join(' ')} onClick={() => handleAction(btn)}>
                     {React.createElement(Icon[btn.icon], {
                       className: styles.icon,
                     })}

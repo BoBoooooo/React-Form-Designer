@@ -8,6 +8,7 @@ import React from 'react';
 import { formJsonType } from './../types/form.d';
 
 interface contextType {
+  status: 'edit' | 'preview';
   widgetForm: formJsonType;
   setWidgetForm: (value: React.SetStateAction<formJsonType>) => void;
   addWidget: (item: object, dragIndex?: number | undefined) => void;
@@ -16,6 +17,7 @@ interface contextType {
 }
 
 export const FormContext = React.createContext<contextType>({
+  status: 'edit',
   widgetForm: {
     list: [],
     config: {

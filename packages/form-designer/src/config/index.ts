@@ -9,11 +9,15 @@ export const handleBtns = [
   {
     label: '布局模式',
     icon: 'BgColorsOutlined',
+    mode: 'edit',
+    script: 'changeModeToEdit',
   },
   {
     label: '预览模式',
     icon: 'SearchOutlined',
     divider: true,
+    mode: 'preview',
+    script: 'changeModeToPreview',
   },
   {
     label: '导入JSON',
