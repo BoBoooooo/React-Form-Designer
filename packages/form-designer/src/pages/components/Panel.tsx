@@ -39,20 +39,9 @@ const FormWrapper = (props: { widgetForm: formJsonType; selectedWidget: Record<s
     });
   };
 
-  const onFormChange = formValue => {
-    console.log('表单值为', formValue);
-  };
   return (
     <>
-      <Form
-        labelCol={{ style: { width: widgetForm.config.labelWidth } }}
-        layout={widgetForm.config.labelPosition}
-        size={widgetForm.config.size}
-        form={form}
-        initialValues={{}}
-        onValuesChange={onFormChange}
-        onFinish={onFinish}
-      >
+      <Form labelCol={{ style: { width: widgetForm.config.labelWidth } }} layout={widgetForm.config.labelPosition} size={widgetForm.config.size} form={form} initialValues={{}} onFinish={onFinish}>
         {widgetForm.list.map(component => (
           <WidgetFormItem key={component.key} component={component} {...props}></WidgetFormItem>
         ))}
