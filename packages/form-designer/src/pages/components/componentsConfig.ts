@@ -4,7 +4,7 @@
  * @copyright: BoBo
  * @Date: 2021-06-05 12:18:34
  */
-import { Input, Select, Radio, TimePicker, DatePicker, TreeSelect, Cascader, Switch, Checkbox, InputNumber, Rate, Slider, Button, Upload, Avatar, Grid, Tabs, Divider } from 'antd';
+import { Input, Select, Radio, TimePicker, DatePicker, TreeSelect, Cascader, Switch, Checkbox, InputNumber, Rate, Slider, Button, Upload, Avatar, Row, Tabs, Divider } from 'antd';
 
 const { TextArea } = Input;
 const { Group: RadioGroup } = Radio;
@@ -466,7 +466,7 @@ const advanceComponents = [
 // 布局组件
 const layoutComponents = [
   {
-    type: 'Grid',
+    type: 'Row',
     name: '栅格布局',
     icon: 'BorderOuterOutlined',
     columns: [
@@ -479,6 +479,7 @@ const layoutComponents = [
       gutter: 0,
       justify: 'start',
       align: 'top',
+      wrap: true,
     },
   },
   {
@@ -597,7 +598,7 @@ export default {
   Button,
   Upload,
   Avatar,
-  Grid,
+  Row,
   Tabs,
   Divider,
 };
