@@ -5,6 +5,7 @@
  * @Date: 2021-06-07 11:10:14
  */
 import { random } from './generator';
+import cloneDeep from 'lodash/cloneDeep';
 
 export const widgetClone = (origin: any) => {
   const {
@@ -12,14 +13,12 @@ export const widgetClone = (origin: any) => {
     options: { remoteOptions },
   } = origin;
   const key = `${type}_${random()}`;
-  const cloneOrigin = JSON.parse(
-    JSON.stringify({
-      ...origin,
-      key,
-      model: key,
-      rules: [],
-    })
-  );
+  const cloneOrigin = cloneDeep({
+    ...origin,
+    key,
+    model: key,
+    rules: [],
+  });
   if (remoteOptions) {
     cloneOrigin.options.remoteFunc = `func_${key}`;
   }

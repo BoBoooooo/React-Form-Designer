@@ -32,6 +32,7 @@ const PropConfig = ({ setSelectedWidget, selectedWidget }) => {
   };
 
   useEffect(() => {
+    console.log('effect', selectedWidget);
     const value: {
       options?: object;
       [key: string]: any;
@@ -57,9 +58,13 @@ const PropConfig = ({ setSelectedWidget, selectedWidget }) => {
         <Item label="标题" name="name">
           <Input placeholder="请输入标题" />
         </Item>
+        <Item label="占位符" name="option_placeholder">
+          <Input placeholder="请输入占位符" />
+        </Item>
         <Item label="自定义className" name="option_className">
           <Input placeholder="自定义className" />
         </Item>
+
         <Item label="是否禁用" name="option_disabled">
           <Switch />
         </Item>

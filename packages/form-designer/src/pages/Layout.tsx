@@ -61,8 +61,15 @@ const App = () => {
 
   // 添加物料到画板区域
   const addWidget = (item: any, dragIndex: number | undefined) => {
-    const widget = widgetClone(item);
+    let widget;
+
     console.log('add', widget, dragIndex);
+
+    // 如果有currentIndex代表是移动操作,不进行clone,直接移动位置即可
+    item.currentIndex ? (widget = { ...item }) : (widget = widgetClone(item));
+    // 删除移动前组件所在索引
+    delete widget.currentIndex;
+
     setWidgetForm(value => {
       const temp = { ...value };
       // 如果中间区域是空或者是直接点击物料,默认加到list尾部
@@ -71,26 +78,27 @@ const App = () => {
       } else {
         temp.list.splice(dragIndex + 1, 0, widget);
       }
+      console.log('当前selectedWidget', widget);
+      setSelectedWidget(widget);
       return temp;
     });
-    setSelectedWidget(widget);
   };
 
   const deleteWidget = (index: number) => {
     setWidgetForm(value => {
       const temp = { ...value };
       temp.list.splice(index, 1);
-      setSelectedWidget(temp.list[index] || temp.list[index - 1]);
+      setSelectedWidget({ ...(temp.list[index] || temp.list[index - 1]) });
       return temp;
     });
   };
 
-  const cloneWidget = oldWidget => {
+  const cloneWidget = (oldWidget, index) => {
     const newWidget = widgetClone(oldWidget);
     setWidgetForm(value => {
       const temp = { ...value };
-      temp.list.push(newWidget);
-      setSelectedWidget(newWidget);
+      temp.list.splice(index + 1, 0, newWidget);
+      setSelectedWidget({ ...newWidget });
       return temp;
     });
   };

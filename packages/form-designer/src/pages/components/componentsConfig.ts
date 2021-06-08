@@ -387,10 +387,17 @@ const advanceComponents = [
     hidden: false,
     options: {
       text: '确认',
-      eventName: 'btnCallback',
-      btnType: 'primary',
-      hiddenLabel: true,
+      href: null,
+      ghost: false,
+      shape: null,
+      type: 'primary',
+      block: false,
     },
+    events: [
+      {
+        name: 'onClick',
+      },
+    ],
   },
   {
     type: 'Upload',
@@ -403,7 +410,6 @@ const advanceComponents = [
       defaultValue: '',
       remoteFunc: '',
       readonly: false,
-      hiddenLabel: false,
     },
   },
   {
@@ -412,10 +418,7 @@ const advanceComponents = [
     icon: 'UserOutlined',
     labelWidth: undefined,
     options: {
-      resourceId: 'id',
-      uploadUrl: '/file/upload',
       width: '180px',
-      hiddenLabel: true,
     },
   },
   {
@@ -442,7 +445,6 @@ const advanceComponents = [
       tableName: '',
       tableDesignerName: '',
       dialogFormDesignerName: '',
-      hiddenLabel: false,
     },
   },
   {
@@ -452,7 +454,6 @@ const advanceComponents = [
     labelWidth: undefined,
     tableColumns: [],
     options: {
-      hiddenLabel: true,
       remote: 'custom',
       remoteFunc: '',
       tableParams: '',
@@ -512,7 +513,7 @@ const layoutComponents = [
     ],
     options: {
       type: '',
-      hiddenLabel: true,
+
       position: 'top',
     },
   },
@@ -523,7 +524,6 @@ const layoutComponents = [
     labelWidth: undefined,
     options: {
       align: 'center',
-      hiddenLabel: true,
     },
   },
 ];
@@ -537,7 +537,7 @@ const chartComponents = [
     options: {
       className: '',
       height: '400px',
-      hiddenLabel: true,
+
       width: '100%',
       loop: false,
       option: {

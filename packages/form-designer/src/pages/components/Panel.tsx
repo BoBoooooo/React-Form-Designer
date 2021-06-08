@@ -52,8 +52,8 @@ const WidgetForm = (props: { widgetForm: formJsonType; selectedWidget: Record<st
           }}
           style={{
             textAlign: 'right',
+            marginTop: '10px',
           }}
-          className="mt-20"
         >
           <Button type="primary" htmlType="submit">
             获取表单值
@@ -65,7 +65,7 @@ const WidgetForm = (props: { widgetForm: formJsonType; selectedWidget: Record<st
 };
 
 export default function Panel(props) {
-  const { addWidget } = useContext(FormContext);
+  const { addWidget, deleteWidget } = useContext(FormContext);
 
   const defaultBorderStyle = '1px dashed rgba(170, 170, 170, 0.7)';
   const hoverBorderStyle = '3px solid #389e0d';
@@ -74,18 +74,20 @@ export default function Panel(props) {
     ev.preventDefault();
     const data = JSON.parse(ev.dataTransfer.getData('Text'));
     let dragIndex;
-
     if (ev.target.className.includes('widget-view')) {
       // 查找当前拖拽到的索引位置
       dragIndex = [].indexOf.call(ev.target.parentElement.children, ev.target as never);
       console.log('拖拽物料至表单', data, dragIndex);
       ev.target.style['border-bottom'] = defaultBorderStyle;
     }
+    if (data.currentIndex) {
+      deleteWidget(data.currentIndex);
+    }
     addWidget(data, dragIndex);
   };
 
   const allowDrop = ev => {
-    if (ev.target.className.includes('widget-view')) {
+    if (ev.target && ev.target.className.includes('widget-view')) {
       ev.target.style['border-bottom'] = hoverBorderStyle;
     }
     ev.preventDefault();

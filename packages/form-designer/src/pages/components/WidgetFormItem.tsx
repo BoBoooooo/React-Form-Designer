@@ -25,14 +25,31 @@ export default function WidgetFormItem({ component, setSelectedWidget, selectedW
   };
 
   const onDragStart = (ev, com) => {
-    ev.dataTransfer.setData('Text', JSON.stringify(com));
+    const temp = { ...com };
+    // 添加一个临时标记位,标记当前组件所在位置
+    temp.currentIndex = index;
+    ev.dataTransfer.setData('Text', JSON.stringify(temp));
+    ev.dataTransfer.effectAllowed = 'move';
   };
 
   const handleWidgetClone = () => {
-    cloneWidget(component);
+    cloneWidget(component, index);
   };
   const handleWidgetDelete = () => {
     deleteWidget(index);
+  };
+
+  const getProps = component => {
+    const { options: props, events } = component;
+    // 注入事件
+    if (events) {
+      events.map(ev => {
+        props[ev.name] = e => {
+          console.log(ev.name, e, component);
+        };
+      });
+    }
+    return props;
   };
 
   return (
@@ -45,7 +62,7 @@ export default function WidgetFormItem({ component, setSelectedWidget, selectedW
         valuePropName={getValuePropName(component.type)}
         className={styles['ant-form-item']}
       >
-        {React.createElement(AntdComs[component.type], component.options)}
+        {React.createElement(AntdComs[component.type], getProps(component), component.options.text)}
       </Form.Item>
       {/* 右上角model显示 */}
       <div className={styles['widget-view-model']}>
