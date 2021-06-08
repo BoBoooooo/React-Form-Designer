@@ -76,6 +76,25 @@ const App = () => {
     setSelectedWidget(widget);
   };
 
+  const deleteWidget = (index: number) => {
+    setWidgetForm(value => {
+      const temp = { ...value };
+      temp.list.splice(index, 1);
+      setSelectedWidget(temp.list[index] || temp.list[index - 1]);
+      return temp;
+    });
+  };
+
+  const cloneWidget = oldWidget => {
+    const newWidget = widgetClone(oldWidget);
+    setWidgetForm(value => {
+      const temp = { ...value };
+      temp.list.push(newWidget);
+      setSelectedWidget(newWidget);
+      return temp;
+    });
+  };
+
   // 表单JSON改变回调
   useEffect(() => {
     console.log('当前表单json', widgetForm);
@@ -100,6 +119,8 @@ const App = () => {
         widgetForm,
         setWidgetForm,
         addWidget,
+        deleteWidget,
+        cloneWidget,
       }}
     >
       <Layout className={styles['fd-container']}>

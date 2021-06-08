@@ -9,8 +9,10 @@ import { formJsonType } from './../types/form.d';
 
 interface contextType {
   widgetForm: formJsonType;
-  setWidgetForm: Function;
-  addWidget: Function;
+  setWidgetForm: (value: React.SetStateAction<formJsonType>) => void;
+  addWidget: (item: any, dragIndex?: number | undefined) => void;
+  deleteWidget: (index) => void;
+  cloneWidget: (com: object) => void;
 }
 
 export const FormContext = React.createContext<contextType>({
@@ -25,4 +27,6 @@ export const FormContext = React.createContext<contextType>({
   },
   setWidgetForm: () => {},
   addWidget: () => {},
+  deleteWidget: () => {},
+  cloneWidget: () => {},
 });

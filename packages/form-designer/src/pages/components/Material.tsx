@@ -28,7 +28,7 @@ export default function Material() {
             <div className={styles.title}>{com.label}</div>
             {com.list.map(item => {
               return (
-                <div key={item.type} className={styles.component} draggable id={'bform_component_' + item.type} onDragStart={ev => onDragStart(ev, item)} onClick={() => add(item)}>
+                <div key={item.type} className={styles.component} draggable onDragStart={ev => onDragStart(ev, item)} onClick={() => add(item)}>
                   {React.createElement(Icon[item.icon], {
                     className: styles.icon,
                   })}

@@ -28,7 +28,7 @@ const Empty = () => {
   );
 };
 
-const FormWrapper = (props: { widgetForm: formJsonType; selectedWidget: Record<string, any>; setSelectedWidget: Function }) => {
+const WidgetForm = (props: { widgetForm: formJsonType; selectedWidget: Record<string, any>; setSelectedWidget: Function }) => {
   const [form] = Form.useForm();
   const { widgetForm } = props;
   // 通过 Form 的 Submit监听 得到字段值
@@ -42,8 +42,8 @@ const FormWrapper = (props: { widgetForm: formJsonType; selectedWidget: Record<s
   return (
     <>
       <Form labelCol={{ style: { width: widgetForm.config.labelWidth } }} layout={widgetForm.config.labelPosition} size={widgetForm.config.size} form={form} initialValues={{}} onFinish={onFinish}>
-        {widgetForm.list.map(component => (
-          <WidgetFormItem key={component.key} component={component} {...props}></WidgetFormItem>
+        {widgetForm.list.map((component, index) => (
+          <WidgetFormItem key={component.key} index={index} component={component} {...props}></WidgetFormItem>
         ))}
         {/* Submit按钮 */}
         <Form.Item
@@ -67,6 +67,9 @@ const FormWrapper = (props: { widgetForm: formJsonType; selectedWidget: Record<s
 export default function Panel(props) {
   const { addWidget } = useContext(FormContext);
 
+  const defaultBorderStyle = '1px dashed rgba(170, 170, 170, 0.7)';
+  const hoverBorderStyle = '3px solid #389e0d';
+
   const drop = ev => {
     ev.preventDefault();
     const data = JSON.parse(ev.dataTransfer.getData('Text'));
@@ -76,28 +79,28 @@ export default function Panel(props) {
       // 查找当前拖拽到的索引位置
       dragIndex = [].indexOf.call(ev.target.parentElement.children, ev.target as never);
       console.log('拖拽物料至表单', data, dragIndex);
-      ev.target.style['border-bottom'] = '1px dashed rgba(170, 170, 170, 0.7)';
+      ev.target.style['border-bottom'] = defaultBorderStyle;
     }
     addWidget(data, dragIndex);
   };
 
   const allowDrop = ev => {
     if (ev.target.className.includes('widget-view')) {
-      ev.target.style['border-bottom'] = '3px solid #389e0d';
+      ev.target.style['border-bottom'] = hoverBorderStyle;
     }
     ev.preventDefault();
   };
 
   const onDragLeave = ev => {
     if (ev.target.className.includes('widget-view')) {
-      ev.target.style['border-bottom'] = '1px dashed rgba(170, 170, 170, 0.7)';
+      ev.target.style['border-bottom'] = defaultBorderStyle;
     }
   };
 
   return (
     <div className={styles['widget-container']} onDrop={drop} onDragOver={allowDrop} onDragLeave={onDragLeave}>
       {/* 表单没内容时显示暂无数据 */}
-      {props.widgetForm.list?.length === 0 ? <Empty></Empty> : <FormWrapper {...props}></FormWrapper>}
+      {props.widgetForm.list?.length === 0 ? <Empty></Empty> : <WidgetForm {...props}></WidgetForm>}
     </div>
   );
 }
