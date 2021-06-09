@@ -6,7 +6,7 @@
  */
 import React, { useContext } from 'react';
 import { Form, Tooltip } from 'antd';
-import AntdComs from './componentsConfig';
+import AntdComs from '../../config/componentsConfig';
 import { FormContext } from '../../context/global';
 import styles from '../../styles/panel.module.scss';
 import { DragOutlined, CopyOutlined, DeleteOutlined } from '@ant-design/icons';

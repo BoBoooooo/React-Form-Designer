@@ -7,6 +7,7 @@
 import React, { useState, useEffect, useContext } from 'react';
 import { Form, Tabs, Radio, InputNumber, Input, Switch } from 'antd';
 import { FormContext } from '../../context/global';
+import optionsConfig from '../../config/optionsConfig';
 
 const { Item } = Form;
 const { TabPane } = Tabs;
@@ -58,16 +59,18 @@ const PropConfig = ({ setSelectedWidget, selectedWidget }) => {
         <Item label="标题" name="name">
           <Input placeholder="请输入标题" />
         </Item>
-        <Item label="占位符" name="option_placeholder">
-          <Input placeholder="请输入占位符" />
-        </Item>
-        <Item label="自定义className" name="option_className">
-          <Input placeholder="自定义className" />
-        </Item>
-
-        <Item label="是否禁用" name="option_disabled">
-          <Switch />
-        </Item>
+        {/* 遍历当前组件配置项 */}
+        {Object.entries(selectedWidget.options || {}).map(([key]) => {
+          const config = optionsConfig[key];
+          if (config) {
+            const { label, type: DynamicDom, props } = config.multi ? config[selectedWidget.type] : config;
+            return (
+              <Item key={label} label={label} name={'option_' + key}>
+                <DynamicDom placeholder={'请输入' + label} {...props} />
+              </Item>
+            );
+          }
+        })}
       </Form>
     </div>
   );

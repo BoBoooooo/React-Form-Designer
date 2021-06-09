@@ -5,7 +5,7 @@
  * @Date: 2021-06-05 13:30:36
  */
 
-export const handleBtns = [
+export default [
   {
     label: '布局模式',
     icon: 'BgColorsOutlined',

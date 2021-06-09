@@ -88,13 +88,12 @@ const basicComponents = [
       ],
       disabled: false,
       width: '100%',
-      remote: 'static',
       required: false,
       // 用于设置 Radio options 类型
       optionType: 'default',
     },
     custom: {
-      remote: false,
+      remote: 'static',
       remoteOptions: [],
       remoteFunc: '',
       labelWidth: undefined,
@@ -252,7 +251,6 @@ const basicComponents = [
       size: 'default', // default | small
       disabled: false,
       defaultChecked: false,
-      checkedChildren: null,
     },
   },
   {
@@ -289,10 +287,9 @@ const basicComponents = [
       placeholder: '',
       changeOnSelect: false,
       expandTrigger: 'click',
-      notFoundContent: null,
+      notFoundContent: '暂无数据',
       popupPlacement: 'bottomLeft', // bottomLeft | bottomRight | topLeft | topRight
       allowClear: true,
-      multiple: false,
       disabled: false,
       bordered: true,
       showSearch: true,

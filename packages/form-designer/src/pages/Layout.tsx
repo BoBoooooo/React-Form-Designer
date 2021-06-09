@@ -6,7 +6,7 @@ import Material from './components/Material';
 import Panel from './components/Panel';
 import WidgetConfig from './components/WidgetConfig';
 import * as Icon from '@ant-design/icons';
-import { handleBtns } from '../config';
+import handleBtns from '../config/handleButtons';
 import { widgetClone } from '../utils/form';
 import { formJsonType } from '../types/form.d';
 import { FormContext as GlobalContext } from '../context/global';

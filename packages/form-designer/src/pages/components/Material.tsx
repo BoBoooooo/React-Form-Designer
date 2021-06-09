@@ -6,7 +6,7 @@
  */
 
 import React, { useContext } from 'react';
-import { components } from './componentsConfig';
+import { components } from '../../config/componentsConfig';
 import styles from '../../styles/material.module.scss';
 import { FormContext } from '../../context/global';
 import * as Icon from '@ant-design/icons';
