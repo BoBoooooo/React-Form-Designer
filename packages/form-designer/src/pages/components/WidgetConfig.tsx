@@ -14,7 +14,7 @@ const { Item } = Form;
 const { TabPane } = Tabs;
 
 // 静态数据增删改
-const ArrayControl = ({ name }) => {
+const DynamicArray = ({ name }) => {
   return (
     <Form.List name={name}>
       {(fields, { add, remove }) => (
@@ -62,8 +62,7 @@ const PropConfig = ({ setSelectedWidget, selectedWidget }) => {
   }, [selectedWidget]);
 
   // 回调更新全局json中的配置
-  const onFinish = (changedValues, allValues) => {
-    console.log('配置更新', changedValues, allValues);
+  const onValuesChange = (changedValues, allValues) => {
     setSelectedWidget(v => {
       const temp = { ...v };
       Object.keys(changedValues).forEach(key => {
@@ -79,7 +78,6 @@ const PropConfig = ({ setSelectedWidget, selectedWidget }) => {
 
   // 初始化表单数据
   useEffect(() => {
-    console.log('effect', selectedWidget);
     const value: {
       options?: object;
       [key: string]: any;
@@ -98,7 +96,7 @@ const PropConfig = ({ setSelectedWidget, selectedWidget }) => {
 
   return (
     <div>
-      <Form layout="vertical" form={form} size="small" onValuesChange={onFinish}>
+      <Form layout="vertical" form={form} size="small" onValuesChange={onValuesChange}>
         {isSelected && (
           <>
             <Item label="字段标识" name="model">
@@ -116,7 +114,7 @@ const PropConfig = ({ setSelectedWidget, selectedWidget }) => {
             const { label, type: DynamicDom, props } = config.multi ? config[selectedWidget.type] : config;
 
             if (DynamicDom === 'ArrayControl') {
-              return <ArrayControl key={label} name={'option_' + key}></ArrayControl>;
+              return <DynamicArray key={label} name={'option_' + key}></DynamicArray>;
             } else {
               return (
                 <Item key={label} label={label} name={'option_' + key}>

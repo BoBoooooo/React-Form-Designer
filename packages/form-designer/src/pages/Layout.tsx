@@ -88,7 +88,6 @@ const App = () => {
       } else {
         temp.list.splice(dragIndex + 1, 0, widget);
       }
-      console.log('当前selectedWidget', widget);
       setSelectedWidget(widget);
       return temp;
     });

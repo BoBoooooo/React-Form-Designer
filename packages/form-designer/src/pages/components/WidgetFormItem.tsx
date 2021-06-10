@@ -18,6 +18,7 @@ export default function WidgetFormItem({ component, setSelectedWidget, selectedW
     setSelectedWidget(component);
     console.log('当前选中', component);
     e.preventDefault();
+    e.stopPropagation();
   };
 
   const getValuePropName = type => {
@@ -68,7 +69,7 @@ export default function WidgetFormItem({ component, setSelectedWidget, selectedW
       <div className={styles['widget-view-model']}>
         <span>{component.model}</span>
       </div>
-      {/* 左上角可拖拽按钮 */}
+      {/* 操作按钮 */}
       {component.key === selectedWidget.key && (
         <>
           <div className={styles['widget-view-drag']}>

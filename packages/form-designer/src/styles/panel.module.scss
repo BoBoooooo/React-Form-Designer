@@ -31,14 +31,30 @@ $primary-background-color: #ecf5ff;
       background: #fdf6ec;
       outline: 1px solid $layout-color;
       outline-offset: 0px;
-
       &.active {
         outline: 1px solid $layout-color;
         border: 1px solid $layout-color;
         outline-offset: 0;
       }
     }
-    .widget-view-action {
+    .widget-col-drag {
+      position: absolute;
+      left: 0px;
+      top: 0px;
+      color: white;
+      box-sizing: border-box;
+      padding: 0px;
+      font-size: 18px;
+      background: $layout-color;
+      z-index: 9;
+      span {
+        color: #fff;
+        font-weight: 500;
+        margin: 0 5px;
+        cursor: move;
+      }
+    }
+    .widget-col-action {
       position: absolute;
       right: 0;
       bottom: 0;
@@ -51,10 +67,14 @@ $primary-background-color: #ecf5ff;
         }
       }
     }
+    .widget-col-list {
+      min-height: 50px;
+      border: 1px dashed #ccc;
+      background: #fff;
+    }
 
     .widget-view-drag {
       float: right;
-
       background: $layout-color;
       span {
         color: white;
@@ -70,7 +90,7 @@ $primary-background-color: #ecf5ff;
   }
   .widget-view {
     // padding-bottom: 18px;
-    padding: 5px;
+    padding: 10px;
     overflow: hidden;
     position: relative;
     border: 1px dashed hsla(0, 0%, 66.7%, 0.7);
@@ -96,14 +116,15 @@ $primary-background-color: #ecf5ff;
       bottom: 0;
       height: 20px;
       line-height: 20px;
+      background: $primary-color;
       z-index: 9;
       span {
         font-size: 14px;
-        color: $layout-color;
+        color: white;
         margin: 0 5px;
         cursor: pointer;
         &:hover {
-          color: $primary-color;
+          color: #333;
         }
       }
     }

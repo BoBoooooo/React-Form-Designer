@@ -50,6 +50,7 @@ const WidgetForm = (props: { widgetForm: formJsonType; selectedWidget: Record<st
       <ConfigProvider locale={zhCN}>
         <Form labelCol={{ style: { width: widgetForm.config.labelWidth } }} layout={widgetForm.config.labelPosition} size={widgetForm.config.size} form={form} initialValues={{}} onFinish={onFinish}>
           {widgetForm.list.map((component, index) => {
+            // 此处判断是栅格布局嵌套还是直接拖拽组件
             if (component.type === 'Row') {
               return <WidgetLayout key={component.key} index={index} component={component} {...props}></WidgetLayout>;
             } else {
@@ -86,6 +87,7 @@ export default function Panel(props) {
     ev.preventDefault();
     const data = JSON.parse(ev.dataTransfer.getData('Text'));
     let dragIndex;
+
     if (ev.target.className.includes('widget-view')) {
       // 查找当前拖拽到的索引位置
       dragIndex = [].indexOf.call(ev.target.parentElement.children, ev.target as never);
