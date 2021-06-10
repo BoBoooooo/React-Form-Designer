@@ -4,41 +4,87 @@
  * @copyright: BoBo
  * @Date: 2021-06-05 13:08:48
  */
-import React, { useState, useEffect, useContext } from 'react';
-import { Form, Tabs, Radio, InputNumber, Input, Switch } from 'antd';
+import React, { useState, useEffect, useContext, useMemo } from 'react';
+import { Form, Tabs, Radio, InputNumber, Input, Space, Button } from 'antd';
 import { FormContext } from '../../context/global';
 import optionsConfig from '../../config/optionsConfig';
+import { MinusCircleOutlined, PlusOutlined } from '@ant-design/icons';
 
 const { Item } = Form;
 const { TabPane } = Tabs;
+
+// 静态数据增删改
+const ArrayControl = ({ name }) => {
+  return (
+    <Form.List name={name}>
+      {(fields, { add, remove }) => (
+        <>
+          {fields.map(({ key, name, fieldKey, ...restField }, index) => (
+            <Item {...restField} label={index === 0 ? '静态选项' : ''} required={false} key={fieldKey}>
+              <Space key={key} style={{ display: 'flex', marginBottom: 8 }} align="baseline">
+                <Item {...restField} name={[name, 'label']} fieldKey={[fieldKey, 'label']} rules={[{ required: true, message: '请输入label' }]}>
+                  <Input placeholder="label" />
+                </Item>
+                <Item {...restField} name={[name, 'value']} fieldKey={[fieldKey, 'value']} rules={[{ required: true, message: '请输入value' }]}>
+                  <Input placeholder="value" />
+                </Item>
+                <MinusCircleOutlined onClick={() => remove(name)} />
+              </Space>
+            </Item>
+          ))}
+          <Item>
+            <Button
+              type="dashed"
+              onClick={() =>
+                add({
+                  label: '',
+                  value: '',
+                })
+              }
+              block
+              icon={<PlusOutlined />}
+            >
+              新增Option
+            </Button>
+          </Item>
+        </>
+      )}
+    </Form.List>
+  );
+};
 
 // 字段属性配置
 const PropConfig = ({ setSelectedWidget, selectedWidget }) => {
   const [form] = Form.useForm();
 
+  const isSelected = useMemo(() => {
+    return Object.keys(selectedWidget).length > 0;
+  }, [selectedWidget]);
+
   // 回调更新全局json中的配置
-  const onValuesChange = value => {
-    console.log('配置更新', value);
+  const onFinish = (changedValues, allValues) => {
+    console.log('配置更新', changedValues, allValues);
     setSelectedWidget(v => {
       const temp = { ...v };
-      Object.keys(value).forEach(key => {
+      Object.keys(changedValues).forEach(key => {
         if (key.includes('option_')) {
-          temp!.options[key!.replace('option_', '')] = value[key];
+          temp!.options[key!.replace('option_', '')] = allValues[key];
         } else {
-          temp[key] = value[key];
+          temp[key] = changedValues[key];
         }
       });
       return temp;
     });
   };
 
+  // 初始化表单数据
   useEffect(() => {
     console.log('effect', selectedWidget);
     const value: {
       options?: object;
       [key: string]: any;
     } = JSON.parse(JSON.stringify(selectedWidget)) || {};
-    if (Object.keys(value).length === 0) {
+    if (!isSelected) {
       form.resetFields();
       return;
     }
@@ -52,23 +98,32 @@ const PropConfig = ({ setSelectedWidget, selectedWidget }) => {
 
   return (
     <div>
-      <Form layout="vertical" form={form} size="small" onValuesChange={onValuesChange}>
-        <Item label="字段标识" name="model">
-          <Input placeholder="请输入字段标识" />
-        </Item>
-        <Item label="标题" name="name">
-          <Input placeholder="请输入标题" />
-        </Item>
+      <Form layout="vertical" form={form} size="small" onValuesChange={onFinish}>
+        {isSelected && (
+          <>
+            <Item label="字段标识" name="model">
+              <Input placeholder="请输入字段标识" />
+            </Item>
+            <Item label="标题" name="name">
+              <Input placeholder="请输入标题" />
+            </Item>
+          </>
+        )}
         {/* 遍历当前组件配置项 */}
         {Object.entries(selectedWidget.options || {}).map(([key]) => {
           const config = optionsConfig[key];
           if (config) {
             const { label, type: DynamicDom, props } = config.multi ? config[selectedWidget.type] : config;
-            return (
-              <Item key={label} label={label} name={'option_' + key}>
-                <DynamicDom placeholder={'请输入' + label} {...props} />
-              </Item>
-            );
+
+            if (DynamicDom === 'ArrayControl') {
+              return <ArrayControl key={label} name={'option_' + key}></ArrayControl>;
+            } else {
+              return (
+                <Item key={label} label={label} name={'option_' + key}>
+                  <DynamicDom placeholder={'请输入' + label} {...props} />
+                </Item>
+              );
+            }
           }
         })}
       </Form>

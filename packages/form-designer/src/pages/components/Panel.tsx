@@ -7,11 +7,16 @@
 import React, { useContext } from 'react';
 import form_empty from '../../assets/form_empty.svg';
 import styles from '../../styles/panel.module.scss';
-import { Form, Button, Modal } from 'antd';
+import { Form, Button, Modal, ConfigProvider } from 'antd';
 import WidgetFormItem from './WidgetFormItem';
 import { formJsonType } from '../../types/form.d';
 import { FormContext } from '../../context/global';
 import WidgetLayout from './WidgetLayout';
+import zhCN from 'antd/lib/locale/zh_CN';
+import moment from 'moment';
+import 'moment/locale/zh-cn';
+
+moment.locale('zh');
 
 const Empty = () => {
   return (
@@ -42,29 +47,31 @@ const WidgetForm = (props: { widgetForm: formJsonType; selectedWidget: Record<st
 
   return (
     <>
-      <Form labelCol={{ style: { width: widgetForm.config.labelWidth } }} layout={widgetForm.config.labelPosition} size={widgetForm.config.size} form={form} initialValues={{}} onFinish={onFinish}>
-        {widgetForm.list.map((component, index) => {
-          if (component.type === 'Row') {
-            return <WidgetLayout key={component.key} index={index} component={component} {...props}></WidgetLayout>;
-          } else {
-            return <WidgetFormItem key={component.key} index={index} component={component} {...props}></WidgetFormItem>;
-          }
-        })}
-        {/* Submit按钮 */}
-        <Form.Item
-          wrapperCol={{
-            offset: 22,
-          }}
-          style={{
-            textAlign: 'right',
-            marginTop: '10px',
-          }}
-        >
-          <Button type="primary" htmlType="submit">
-            获取表单值
-          </Button>
-        </Form.Item>
-      </Form>
+      <ConfigProvider locale={zhCN}>
+        <Form labelCol={{ style: { width: widgetForm.config.labelWidth } }} layout={widgetForm.config.labelPosition} size={widgetForm.config.size} form={form} initialValues={{}} onFinish={onFinish}>
+          {widgetForm.list.map((component, index) => {
+            if (component.type === 'Row') {
+              return <WidgetLayout key={component.key} index={index} component={component} {...props}></WidgetLayout>;
+            } else {
+              return <WidgetFormItem key={component.key} index={index} component={component} {...props}></WidgetFormItem>;
+            }
+          })}
+          {/* Submit按钮 */}
+          <Form.Item
+            wrapperCol={{
+              offset: 22,
+            }}
+            style={{
+              textAlign: 'right',
+              marginTop: '10px',
+            }}
+          >
+            <Button type="primary" htmlType="submit">
+              获取表单值
+            </Button>
+          </Form.Item>
+        </Form>
+      </ConfigProvider>
     </>
   );
 };

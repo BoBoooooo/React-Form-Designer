@@ -6,15 +6,6 @@
  */
 import { Input, Switch, InputNumber, Select } from 'antd';
 
-// 不同类型字段用不同的组件控制
-const type = {
-  boolean: Switch,
-  number: InputNumber,
-  array: Switch,
-  object: Switch,
-  string: Input,
-};
-
 const widgetSelect = options =>
   options.map(v => ({
     label: v,
@@ -87,7 +78,7 @@ export default {
     label: '字符值模式',
   },
   options: {
-    type: type.array,
+    type: 'ArrayControl',
     label: '静态选项',
   },
   optionType: {
@@ -257,10 +248,10 @@ export default {
       options: widgetSelect(['bottomLeft', 'bottomRight', 'topLeft', 'topRight']),
     },
   },
-  fieldNames: {
-    type: type.object,
-    label: '自定义 options 中 label name children 的字段',
-  },
+  // fieldNames: {
+  //   type: 'ArrayControl',
+  //   label: '自定义 options 中 label name children 的字段',
+  // },
   multiple: {
     type: Switch,
     label: '支持多选',
@@ -281,10 +272,10 @@ export default {
     type: Switch,
     label: '默认展开所有树节点',
   },
-  treeData: {
-    type: type.array,
-    label: '静态数据',
-  },
+  // treeData: {
+  //   type: 'ArrayControl',
+  //   label: '静态数据',
+  // },
   text: {
     type: Input,
     label: '文本内容',
@@ -314,5 +305,27 @@ export default {
   block: {
     type: Switch,
     label: '将按钮宽度调整为其父宽度的选项',
+  },
+  align: {
+    type: Select,
+    label: '垂直对齐方式',
+    props: {
+      options: widgetSelect(['top', 'middle', 'bottom']),
+    },
+  },
+  gutter: {
+    type: InputNumber,
+    label: '栅格间隔',
+  },
+  justify: {
+    type: Select,
+    label: '水平排列方式',
+    props: {
+      options: widgetSelect(['start', 'end', 'center', 'space-around', 'space-between']),
+    },
+  },
+  wrap: {
+    type: Switch,
+    label: '是否自动换行',
   },
 };
