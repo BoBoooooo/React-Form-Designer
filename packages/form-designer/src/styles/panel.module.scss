@@ -22,6 +22,7 @@ $primary-background-color: #ecf5ff;
     padding: 5px;
     background-color: rgba(253, 246, 236, 0.3);
     position: relative;
+    border: 1px dashed hsla(0, 0%, 66.7%, 0.7);
     &.active {
       outline: 1px solid $layout-color;
       border: 1px solid $layout-color;

@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import logo from '../assets/logo.svg';
 import styles from '../styles/app.module.scss';
-import { Divider, Layout, message, Modal } from 'antd';
+import { Divider, Input, Layout, message, Modal, Form, Button } from 'antd';
 import Material from './components/Material';
 import Panel from './components/Panel';
 import WidgetConfig from './components/WidgetConfig';
@@ -10,6 +10,9 @@ import handleBtns from '../config/handleButtons';
 import { widgetClone } from '../utils/form';
 import { formJsonType } from '../types/form.d';
 import { FormContext as GlobalContext } from '../context/global';
+import AceEditor from 'react-ace';
+import 'ace-builds/src-noconflict/mode-json';
+import 'ace-builds/src-noconflict/theme-github';
 
 const { Header, Sider, Content } = Layout;
 
@@ -26,6 +29,9 @@ const App = () => {
           width: '50%',
           content: JSON.stringify(widgetForm),
         });
+        break;
+      case 'handleImportJson':
+        setIsModalVisible(true);
         break;
       case 'handleClear':
         handleClear();
@@ -53,6 +59,12 @@ const App = () => {
     });
     setSelectedWidget({});
   };
+  // 导入JSON按钮
+  const handleImportJson = values => {
+    setWidgetForm(JSON.parse(values.formJson));
+    message.success('导入成功');
+    setIsModalVisible(false);
+  };
 
   // 初始化formJSON数据
   const [widgetForm, setWidgetForm] = useState<formJsonType>({
@@ -68,6 +80,8 @@ const App = () => {
   const [selectedWidget, setSelectedWidget] = useState<Record<string, any>>({});
 
   const [status, setStatus] = useState<'edit' | 'preview'>('edit');
+
+  const [isModalVisible, setIsModalVisible] = useState(false);
 
   // 添加物料到画板区域
   const addWidget = (item: any, dragIndex: number | undefined) => {
@@ -186,6 +200,53 @@ const App = () => {
           </Sider>
         </Layout>
       </Layout>
+
+      {/* 导入JSON对话框 */}
+      <Modal title="导入JSON" footer={null} visible={isModalVisible} maskClosable closable={false}>
+        <Form onFinish={handleImportJson}>
+          <Form.Item
+            name="formJson"
+            rules={[
+              {
+                required: true,
+                validator: (rule, value, callback) => {
+                  console.log(value);
+                  try {
+                    if (typeof JSON.parse(value) !== 'object') {
+                      throw new Error('请输入正确的json');
+                    } else {
+                      callback();
+                    }
+                  } catch (err) {
+                    callback(err);
+                  }
+                },
+              },
+            ]}
+          >
+            <AceEditor
+              setOptions={{ useWorker: false }}
+              ref="editor"
+              mode="json"
+              theme="github"
+              name="UNIQUE_ID_OF_DIV"
+              editorProps={{ $blockScrolling: true }}
+              enableBasicAutocompletion={true}
+              enableLiveAutocompletion={true}
+              enableSnippets={true}
+              style={{ width: '100%', height: '500px', overflow: 'auto', fontSize: '16px' }}
+            />
+          </Form.Item>
+          <Form.Item>
+            <Button type="primary" htmlType="submit">
+              导入JSON
+            </Button>
+            <Button type="default" onClick={() => setIsModalVisible(false)}>
+              取消
+            </Button>
+          </Form.Item>
+        </Form>
+      </Modal>
     </GlobalContext.Provider>
   );
 };

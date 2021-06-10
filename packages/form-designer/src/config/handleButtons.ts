@@ -22,6 +22,7 @@ export default [
   {
     label: '导入JSON',
     icon: 'CloudUploadOutlined',
+    script: 'handleImportJson',
   },
   {
     label: '生成JSON',

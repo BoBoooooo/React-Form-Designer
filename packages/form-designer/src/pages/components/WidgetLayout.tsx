@@ -11,6 +11,7 @@ import styles from '../../styles/panel.module.scss';
 import { CopyOutlined, FileAddOutlined, DeleteOutlined, DragOutlined } from '@ant-design/icons';
 import { FormContext } from '../../context/global';
 import WidgetFormItem from './WidgetFormItem';
+import { widgetClone } from '../../utils/form';
 
 export default function WidgetLayout({ index, component, selectedWidget, setSelectedWidget }) {
   const { deleteWidget, setWidgetForm } = useContext(FormContext);
@@ -61,11 +62,14 @@ export default function WidgetLayout({ index, component, selectedWidget, setSele
   const drop = (ev, index) => {
     ev.preventDefault();
     ev.stopPropagation();
-    const newWidget = JSON.parse(ev.dataTransfer.getData('Text'));
+    const newWidget = widgetClone(JSON.parse(ev.dataTransfer.getData('Text')));
+
     if (ev.target && ev.target.className.includes('widget-col-list')) {
       ev.target.style['border-bottom'] = defaultBorderStyle;
     }
+    console.log(newWidget);
     addGridWidget(newWidget, index);
+    setSelectedWidget(newWidget);
   };
 
   const allowDrop = ev => {
