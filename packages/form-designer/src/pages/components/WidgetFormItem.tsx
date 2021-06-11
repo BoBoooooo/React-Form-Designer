@@ -26,11 +26,16 @@ export default function WidgetFormItem({ component, setSelectedWidget, selectedW
   };
 
   const onDragStart = (ev, com) => {
+    console.log('开始拖拽', index);
     const temp = { ...com };
     // 添加一个临时标记位,标记当前组件所在位置
     temp.currentIndex = index;
     ev.dataTransfer.setData('Text', JSON.stringify(temp));
     ev.dataTransfer.effectAllowed = 'move';
+  };
+
+  const onDragEnd = (ev, com) => {
+    console.log('拖拽结束', index);
   };
 
   const handleWidgetClone = () => {
@@ -54,7 +59,13 @@ export default function WidgetFormItem({ component, setSelectedWidget, selectedW
   };
 
   return (
-    <div draggable onDragStart={ev => onDragStart(ev, component)} onClick={handleSelect} className={[styles['widget-view'], component.key === selectedWidget.key ? styles.active : null].join(' ')}>
+    <div
+      draggable
+      onDragStart={ev => onDragStart(ev, component)}
+      onDragEnd={ev => onDragEnd(ev, component)}
+      onClick={handleSelect}
+      className={[styles['widget-view'], component.key === selectedWidget.key ? styles.active : null].join(' ')}
+    >
       <Form.Item
         rules={[{ required: component.options.required }]}
         labelAlign={widgetForm.config.labelAlign}

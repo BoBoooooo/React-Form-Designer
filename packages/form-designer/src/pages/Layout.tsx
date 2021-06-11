@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import logo from '../assets/logo.svg';
 import styles from '../styles/app.module.scss';
-import { Divider, Input, Layout, message, Modal, Form, Button } from 'antd';
+import { Divider, Layout, message, Modal, Form, Button } from 'antd';
 import Material from './components/Material';
 import Panel from './components/Panel';
 import WidgetConfig from './components/WidgetConfig';
@@ -13,24 +13,25 @@ import { FormContext as GlobalContext } from '../context/global';
 import AceEditor from 'react-ace';
 import 'ace-builds/src-noconflict/mode-json';
 import 'ace-builds/src-noconflict/theme-github';
+// import FormGenerater from '@bform/form-generater';
+import { CopyToClipboard } from 'react-copy-to-clipboard';
 
 const { Header, Sider, Content } = Layout;
 
 export const AppContext = React.createContext({ content: '' });
 
 const App = () => {
+  const [form] = Form.useForm();
+
   // 操作按钮
   const handleAction = btn => {
     switch (btn.script) {
       case 'handleGenerateJson':
-        Modal.success({
-          title: '生成JSON',
-          maskClosable: true,
-          width: '50%',
-          content: JSON.stringify(widgetForm),
-        });
+        handleGenerateJson();
         break;
       case 'handleImportJson':
+        setStatus('import');
+        form.resetFields();
         setIsModalVisible(true);
         break;
       case 'handleClear':
@@ -59,11 +60,17 @@ const App = () => {
     });
     setSelectedWidget({});
   };
+  const handleGenerateJson = () => {
+    form.setFieldsValue({
+      formJson: JSON.stringify(widgetForm),
+    });
+    setIsModalVisible(true);
+  };
   // 导入JSON按钮
   const handleImportJson = values => {
     setWidgetForm(JSON.parse(values.formJson));
-    message.success('导入成功');
     setIsModalVisible(false);
+    message.success('导入成功');
   };
 
   // 初始化formJSON数据
@@ -79,7 +86,7 @@ const App = () => {
 
   const [selectedWidget, setSelectedWidget] = useState<Record<string, any>>({});
 
-  const [status, setStatus] = useState<'edit' | 'preview'>('edit');
+  const [status, setStatus] = useState<'edit' | 'preview' | 'import'>('edit');
 
   const [isModalVisible, setIsModalVisible] = useState(false);
 
@@ -165,7 +172,7 @@ const App = () => {
             {handleBtns.map(btn => {
               return (
                 <React.Fragment key={btn.label}>
-                  <div className={[styles.button, status === btn.mode ? styles.active : null].join(' ')} onClick={() => handleAction(btn)}>
+                  <div className={[styles.button, btn.mode?.includes(status) ? styles.active : null].join(' ')} onClick={() => handleAction(btn)}>
                     {React.createElement(Icon[btn.icon], {
                       className: styles.icon,
                     })}
@@ -186,6 +193,7 @@ const App = () => {
           {/* 设计面板 */}
           <Content className={styles['fd-container-content']}>
             <Panel addWidget={addWidget} widgetForm={widgetForm} selectedWidget={selectedWidget} setSelectedWidget={setSelectedWidget}></Panel>
+            {/* <FormGenerater data={widgetForm}></FormGenerater> */}
           </Content>
           {/* 配置区域 */}
           <Sider
@@ -201,9 +209,28 @@ const App = () => {
         </Layout>
       </Layout>
 
-      {/* 导入JSON对话框 */}
-      <Modal title="导入JSON" footer={null} visible={isModalVisible} maskClosable closable={false}>
-        <Form onFinish={handleImportJson}>
+      {/* 导入/导出JSON对话框 */}
+      <Modal
+        title={status === 'import' ? '导入JSON' : '生成JSON'}
+        visible={isModalVisible}
+        okText="导入JSON"
+        cancelText="取消"
+        onOk={() => form.submit()}
+        onCancel={() => {
+          setIsModalVisible(false);
+          setStatus('edit');
+        }}
+        footer={
+          status === 'edit'
+            ? [
+                <CopyToClipboard key="copy" text={JSON.stringify(widgetForm)} onCopy={() => message.success('已拷贝至剪切板')}>
+                  <Button type="primary">复制JSON</Button>
+                </CopyToClipboard>,
+              ]
+            : undefined
+        }
+      >
+        <Form form={form} onFinish={handleImportJson}>
           <Form.Item
             name="formJson"
             rules={[
@@ -236,14 +263,6 @@ const App = () => {
               enableSnippets={true}
               style={{ width: '100%', height: '500px', overflow: 'auto', fontSize: '16px' }}
             />
-          </Form.Item>
-          <Form.Item>
-            <Button type="primary" htmlType="submit">
-              导入JSON
-            </Button>
-            <Button type="default" onClick={() => setIsModalVisible(false)}>
-              取消
-            </Button>
           </Form.Item>
         </Form>
       </Modal>

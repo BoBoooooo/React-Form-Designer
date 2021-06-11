@@ -1,9 +1,7 @@
 {
-  "eslint.workingDirectories": [
-    "./packages/form-designer",
-  ],
+  "eslint.workingDirectories": ["./packages/form-designer", "./packages/form-generater"],
   "eslint.enable": true,
-  "editor.formatOnSave": true,
+  "editor.formatOnSave": false,
   "editor.codeActionsOnSave": {
     "source.fixAll.eslint": true
   },
@@ -11,5 +9,5 @@
   "search.exclude": {
     "**/dist": true
   },
-  "eslint.debug": true,
+  "eslint.debug": true
 }

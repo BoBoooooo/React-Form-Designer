@@ -1,0 +1,12 @@
+{
+  "extends": "./tsconfig.base.json",
+  "compilerOptions": {
+    "baseUrl": ".",
+    "allowSyntheticDefaultImports": true,
+    "paths": {
+      "@bform/form-generater": ["packages/form-generater/src/index"],
+      "@bform/form-generater/*": ["packages/form-generater/src/*"]
+    }
+  },
+  "exclude": ["**/node_modules/**", "node_modules"]
+}

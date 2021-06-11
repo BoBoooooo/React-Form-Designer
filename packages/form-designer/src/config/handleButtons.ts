@@ -9,14 +9,14 @@ export default [
   {
     label: '布局模式',
     icon: 'BgColorsOutlined',
-    mode: 'edit',
+    mode: ['edit', 'import'],
     script: 'changeModeToEdit',
   },
   {
     label: '预览模式',
     icon: 'SearchOutlined',
     divider: true,
-    mode: 'preview',
+    mode: ['preview'],
     script: 'changeModeToPreview',
   },
   {
@@ -35,7 +35,7 @@ export default [
   },
   {
     label: '清空',
-    icon: 'StarOutlined',
+    icon: 'ClearOutlined',
     script: 'handleClear',
   },
   {

@@ -8,7 +8,7 @@
     "start": "lerna run start --parallel",
     "build": "lerna run build --parallel",
     "clean": "lerna clean",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "publish": "npm run build && lerna publish -m \"chore: publish\""
   },
   "repository": {
     "type": "git",
@@ -21,6 +21,20 @@
   },
   "homepage": "https://github.com/BoBoooooo/React-Form-Designer#readme",
   "dependencies": {
-    "lerna": "^4.0.0"
-  }
+    "lerna": "^4.0.0",
+    "@rollup/plugin-babel": "^5.0.4",
+    "@rollup/plugin-commonjs": "^13.0.0",
+    "@rollup/plugin-image": "^2.0.5",
+    "@rollup/plugin-node-resolve": "^8.1.0",
+    "rollup": "^2.18.1",
+    "rollup-plugin-postcss": "^3.1.2",
+    "rollup-plugin-terser": "^6.1.0",
+    "rollup-plugin-typescript2": "^0.27.1",
+    "typescript": "^3.9.3",
+    "@babel/cli": "^7.7.5",
+    "@babel/core": "^7.7.5",
+    "@babel/preset-env": "^7.7.5",
+    "@babel/preset-typescript": "^7.10.1"
+  },
+  "__npminstall_done": false
 }

@@ -46,11 +46,19 @@ export default function WidgetLayout({ index, component, selectedWidget, setSele
   };
 
   // 栅格内widget新增
-  const addGridWidget = (newWidget, colIndex) => {
+  const addGridWidget = (item, colIndex, currentIndex) => {
+    let newWidget;
+
+    currentIndex ? (newWidget = { ...item }) : (newWidget = widgetClone(item));
+
     setWidgetForm(value => {
       const temp = { ...value };
       const row = temp.list.find(com => com.key === component.key);
       row.columns[colIndex].list.push(newWidget);
+      // 如果有currentIndex则表示为外侧容器某组件拖动至栅格布局内,需要删除外侧list中该组件
+      if (currentIndex) {
+        deleteWidget(currentIndex);
+      }
       return temp;
     });
   };
@@ -62,13 +70,14 @@ export default function WidgetLayout({ index, component, selectedWidget, setSele
   const drop = (ev, index) => {
     ev.preventDefault();
     ev.stopPropagation();
-    const newWidget = widgetClone(JSON.parse(ev.dataTransfer.getData('Text')));
+    const newWidget = JSON.parse(ev.dataTransfer.getData('Text'));
+    const currentIndex = newWidget.currentIndex;
+    delete newWidget.currentIndex;
 
     if (ev.target && ev.target.className.includes('widget-col-list')) {
       ev.target.style['border-bottom'] = defaultBorderStyle;
     }
-    console.log(newWidget);
-    addGridWidget(newWidget, index);
+    addGridWidget(newWidget, index, currentIndex);
     setSelectedWidget(newWidget);
   };
 

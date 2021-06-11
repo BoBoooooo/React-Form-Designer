@@ -8,7 +8,7 @@ import React from 'react';
 import { formJsonType } from './../types/form.d';
 
 interface contextType {
-  status: 'edit' | 'preview';
+  status: 'edit' | 'preview' | 'import';
   widgetForm: formJsonType;
   setWidgetForm: (value: React.SetStateAction<formJsonType>) => void;
   addWidget: (item: object, dragIndex?: number | undefined) => void;
