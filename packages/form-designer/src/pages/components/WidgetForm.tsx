@@ -88,7 +88,7 @@ export default function WidgetForm(props) {
     const data = JSON.parse(ev.dataTransfer.getData('Text'));
     let dragIndex;
 
-    if (ev?.target?.className.includes('widget-view')) {
+    if (ev?.target?.className?.includes('widget-view')) {
       // 查找当前拖拽到的索引位置
       dragIndex = [].indexOf.call(ev.target.parentElement.children, ev.target as never);
       console.log('拖拽物料至表单', data, dragIndex);
@@ -99,7 +99,7 @@ export default function WidgetForm(props) {
   };
 
   const allowDrop = ev => {
-    if (ev?.target?.className.includes('widget-view')) {
+    if (ev?.target?.className?.includes('widget-view')) {
       ev.target.style['border-bottom'] = hoverBorderStyle;
     }
     ev.preventDefault();
