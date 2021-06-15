@@ -104,10 +104,10 @@ export default function WidgetLayout({ index, component, selectedWidget, setSele
   return (
     <div className={[styles['widget-col'], selectedWidget.key === component.key ? styles.active : null].join(' ')}>
       <Row onClick={handleSelect} gutter={component.options.gutter ? component.options.gutter : 0} justify={component.options.justify} align={component.options.align}>
-        {component.columns.map((col, colIndex) => {
+        {component.columns.map((col, colIndex: number) => {
           return (
             <Col onDrop={ev => drop(ev, index, colIndex)} onDragOver={allowDrop} onDragLeave={onDragLeave} key={index} span={col.span ? col.span : 0} className={styles['widget-col-list']}>
-              {col.list.map((el, i) => {
+              {col.list.map((el, i: number) => {
                 return (
                   <WidgetFormItem rowIndex={index} colIndex={colIndex} key={el.key} index={i} component={el} setSelectedWidget={setSelectedWidget} selectedWidget={selectedWidget}></WidgetFormItem>
                 );

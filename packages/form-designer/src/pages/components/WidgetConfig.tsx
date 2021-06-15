@@ -5,7 +5,7 @@
  * @Date: 2021-06-05 13:08:48
  */
 import React, { useState, useEffect, useContext, useMemo } from 'react';
-import { Form, Tabs, Radio, InputNumber, Input, Space, Button } from 'antd';
+import { Form, Tabs, Radio, InputNumber, Input, Space, Button, Switch } from 'antd';
 import { FormContext } from '../../context/global';
 import optionsConfig from '../../config/optionsConfig';
 import { MinusCircleOutlined, PlusOutlined } from '@ant-design/icons';
@@ -76,6 +76,10 @@ const PropConfig = ({ setSelectedWidget, selectedWidget }) => {
     });
   };
 
+  const getValuePropName = type => {
+    return type === Switch ? 'checked' : 'value';
+  };
+
   // 初始化表单数据
   useEffect(() => {
     const value: {
@@ -93,7 +97,6 @@ const PropConfig = ({ setSelectedWidget, selectedWidget }) => {
     console.log('配置表单当前值', value);
     form.setFieldsValue(value);
   }, [selectedWidget, isSelected, form]);
-
   return (
     <div>
       <Form layout="vertical" form={form} size="small" onValuesChange={onValuesChange}>
@@ -116,7 +119,7 @@ const PropConfig = ({ setSelectedWidget, selectedWidget }) => {
               return <DynamicArray key={label} name={'option_' + key}></DynamicArray>;
             } else {
               return (
-                <Item key={label} label={label} name={'option_' + key}>
+                <Item valuePropName={getValuePropName(DynamicDom)} key={label} label={label} name={'option_' + key}>
                   <DynamicDom placeholder={'请输入' + label} {...props} />
                 </Item>
               );
