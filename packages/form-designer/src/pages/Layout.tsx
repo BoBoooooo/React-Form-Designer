@@ -13,7 +13,7 @@ import { FormContext as GlobalContext } from '../context/global';
 import AceEditor from 'react-ace';
 import 'ace-builds/src-noconflict/mode-json';
 import 'ace-builds/src-noconflict/theme-github';
-// import FormGenerater from '@bform/form-generater';
+// import { FormGenerater } from '@bform/form-generater';
 import FormGenerater from './form-generater/BForm';
 import { CopyToClipboard } from 'react-copy-to-clipboard';
 

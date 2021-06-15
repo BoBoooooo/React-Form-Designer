@@ -58,7 +58,7 @@ export default function WidgetFormItem({ component, setSelectedWidget, selectedW
     const { options: props, events } = component;
     // 注入事件
     if (events) {
-      events.map(ev => {
+      events.forEach(ev => {
         props[ev.name] = e => {
           console.log(ev.name, e, component);
         };

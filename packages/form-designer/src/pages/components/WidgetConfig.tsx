@@ -112,7 +112,6 @@ const PropConfig = ({ setSelectedWidget, selectedWidget }) => {
           const config = optionsConfig[key];
           if (config) {
             const { label, type: DynamicDom, props } = config.multi ? config[selectedWidget.type] : config;
-
             if (DynamicDom === 'ArrayControl') {
               return <DynamicArray key={label} name={'option_' + key}></DynamicArray>;
             } else {
@@ -123,6 +122,7 @@ const PropConfig = ({ setSelectedWidget, selectedWidget }) => {
               );
             }
           }
+          return null;
         })}
       </Form>
     </div>
