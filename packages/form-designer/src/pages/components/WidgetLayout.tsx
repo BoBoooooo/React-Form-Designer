@@ -14,7 +14,7 @@ import WidgetFormItem from './WidgetFormItem';
 import { widgetClone } from '../../utils/form';
 
 export default function WidgetLayout({ index, component, selectedWidget, setSelectedWidget }) {
-  const { deleteWidget, setWidgetForm } = useContext(FormContext);
+  const { deleteWidget, setWidgetForm, cloneWidget } = useContext(FormContext);
   const handleSelect = e => {
     setSelectedWidget(component);
     console.log('当前选中', component);
@@ -38,7 +38,9 @@ export default function WidgetLayout({ index, component, selectedWidget, setSele
     });
   };
   // Row复制
-  const handleGridClone = () => {};
+  const handleGridClone = () => {
+    cloneWidget(component, index);
+  };
 
   // Row删除
   const handleGridDelete = () => {

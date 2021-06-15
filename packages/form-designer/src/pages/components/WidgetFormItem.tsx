@@ -5,7 +5,7 @@
  * @Date: 2021-06-05 21:30:28
  */
 import React, { useContext } from 'react';
-import { Form, Tooltip } from 'antd';
+import { Form, message, Tooltip } from 'antd';
 import AntdComs from '../../config/componentsConfig';
 import { FormContext } from '../../context/global';
 import styles from '../../styles/panel.module.scss';
@@ -44,6 +44,7 @@ export default function WidgetFormItem({ component, setSelectedWidget, selectedW
     } else {
       cloneWidget(component, index);
     }
+    message.success('复制成功');
   };
   const handleWidgetDelete = () => {
     // 如果有值则表示该组件嵌套在栅格布局内
@@ -53,6 +54,7 @@ export default function WidgetFormItem({ component, setSelectedWidget, selectedW
     } else {
       deleteWidget(index);
     }
+    message.success('删除成功');
   };
 
   const getProps = component => {
