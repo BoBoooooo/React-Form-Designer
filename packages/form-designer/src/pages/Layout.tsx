@@ -14,6 +14,7 @@ import AceEditor from 'react-ace';
 import 'ace-builds/src-noconflict/mode-json';
 import 'ace-builds/src-noconflict/theme-github';
 // import FormGenerater from '@bform/form-generater';
+import FormGenerater from './form-generater/BForm';
 import { CopyToClipboard } from 'react-copy-to-clipboard';
 
 const { Header, Sider, Content } = Layout;
@@ -237,7 +238,7 @@ const App = () => {
           <Content className={styles['fd-container-content']}>
             {/* <FormGenerater data={widgetForm}></FormGenerater> */}
             {status.includes('preview') ? (
-              <div>预览模式</div>
+              <FormGenerater data={widgetForm}></FormGenerater>
             ) : (
               <WidgetForm addWidget={addWidget} widgetForm={widgetForm} selectedWidget={selectedWidget} setSelectedWidget={setSelectedWidget}></WidgetForm>
             )}

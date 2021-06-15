@@ -1,3 +1,1 @@
-import BForm from './BForm';
-
-export default BForm;
+export { default as FormGenerater } from './Bform';
