@@ -128,7 +128,6 @@ const App = () => {
     setWidgetForm(value => {
       const temp = { ...value };
       temp.list.splice(index + 1, 0, newWidget);
-      setSelectedWidget({ ...newWidget });
       return temp;
     });
   };
