@@ -11,8 +11,8 @@ import { FormContext } from '../../context/global';
 import styles from '../../styles/panel.module.scss';
 import { DragOutlined, CopyOutlined, DeleteOutlined } from '@ant-design/icons';
 
-export default function WidgetFormItem({ component, setSelectedWidget, selectedWidget, index }) {
-  const { widgetForm, deleteWidget, cloneWidget } = useContext(FormContext);
+export default function WidgetFormItem({ component, setSelectedWidget, selectedWidget, index, colIndex, rowIndex }) {
+  const { widgetForm, deleteWidget, cloneWidget, cloneGridWidget, deleteGridWidget } = useContext(FormContext);
 
   const handleSelect = e => {
     setSelectedWidget(component);
@@ -26,23 +26,33 @@ export default function WidgetFormItem({ component, setSelectedWidget, selectedW
   };
 
   const onDragStart = (ev, com) => {
-    console.log('开始拖拽', index);
-    const temp = { ...com };
-    // 添加一个临时标记位,标记当前组件所在位置
-    temp.currentIndex = index;
-    ev.dataTransfer.setData('Text', JSON.stringify(temp));
+    console.log('开始拖拽', ev, index);
+    ev.dataTransfer.setData('Text', JSON.stringify(com));
     ev.dataTransfer.effectAllowed = 'move';
   };
 
-  const onDragEnd = (ev, com) => {
+  const onDragEnd = () => {
     console.log('拖拽结束', index);
+    handleWidgetDelete();
   };
 
   const handleWidgetClone = () => {
-    cloneWidget(component, index);
+    console.log('复制组件,所在位置', rowIndex, colIndex);
+
+    if (rowIndex !== null && colIndex !== null) {
+      cloneGridWidget(component, rowIndex, colIndex, index);
+    } else {
+      cloneWidget(component, index);
+    }
   };
   const handleWidgetDelete = () => {
-    deleteWidget(index);
+    // 如果有值则表示该组件嵌套在栅格布局内
+    console.log('删除组件,所在位置', rowIndex, colIndex);
+    if (rowIndex !== null && colIndex !== null) {
+      deleteGridWidget(rowIndex, colIndex, index);
+    } else {
+      deleteWidget(index);
+    }
   };
 
   const getProps = component => {
@@ -62,7 +72,7 @@ export default function WidgetFormItem({ component, setSelectedWidget, selectedW
     <div
       draggable
       onDragStart={ev => onDragStart(ev, component)}
-      onDragEnd={ev => onDragEnd(ev, component)}
+      onDragEnd={onDragEnd}
       onClick={handleSelect}
       className={[styles['widget-view'], component.key === selectedWidget.key ? styles.active : null].join(' ')}
     >

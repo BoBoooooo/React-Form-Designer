@@ -9,7 +9,7 @@ import form_empty from '../../assets/form_empty.svg';
 import styles from '../../styles/panel.module.scss';
 import { Form, Button, Modal, ConfigProvider } from 'antd';
 import WidgetFormItem from './WidgetFormItem';
-import { formJsonType } from '../../types/form.d';
+import { formJsonType } from '../../types/form';
 import { FormContext } from '../../context/global';
 import WidgetLayout from './WidgetLayout';
 import zhCN from 'antd/lib/locale/zh_CN';
@@ -34,7 +34,7 @@ const Empty = () => {
   );
 };
 
-const WidgetForm = (props: { widgetForm: formJsonType; selectedWidget: Record<string, any>; setSelectedWidget: Function }) => {
+const Panel = (props: { widgetForm: formJsonType; selectedWidget: Record<string, any>; setSelectedWidget: Function }) => {
   const [form] = Form.useForm();
   const { widgetForm } = props;
   // 通过 Form 的 Submit监听 得到字段值
@@ -54,7 +54,7 @@ const WidgetForm = (props: { widgetForm: formJsonType; selectedWidget: Record<st
             if (component.type === 'Row') {
               return <WidgetLayout key={component.key} index={index} component={component} {...props}></WidgetLayout>;
             } else {
-              return <WidgetFormItem key={component.key} index={index} component={component} {...props}></WidgetFormItem>;
+              return <WidgetFormItem rowIndex={null} colIndex={null} key={component.key} index={index} component={component} {...props}></WidgetFormItem>;
             }
           })}
           {/* Submit按钮 */}
@@ -77,8 +77,8 @@ const WidgetForm = (props: { widgetForm: formJsonType; selectedWidget: Record<st
   );
 };
 
-export default function Panel(props) {
-  const { addWidget, deleteWidget } = useContext(FormContext);
+export default function WidgetForm(props) {
+  const { addWidget } = useContext(FormContext);
 
   const defaultBorderStyle = '1px dashed rgba(170, 170, 170, 0.7)';
   const hoverBorderStyle = '3px solid #389e0d';
@@ -94,9 +94,7 @@ export default function Panel(props) {
       console.log('拖拽物料至表单', data, dragIndex);
       ev.target.style['border-bottom'] = defaultBorderStyle;
     }
-    if (data.currentIndex) {
-      deleteWidget(data.currentIndex);
-    }
+
     addWidget(data, dragIndex);
   };
 
@@ -116,7 +114,7 @@ export default function Panel(props) {
   return (
     <div className={styles['widget-container']} onDrop={drop} onDragOver={allowDrop} onDragLeave={onDragLeave}>
       {/* 表单没内容时显示暂无数据 */}
-      {props.widgetForm.list?.length === 0 ? <Empty></Empty> : <WidgetForm {...props}></WidgetForm>}
+      {props.widgetForm.list?.length === 0 ? <Empty></Empty> : <Panel {...props}></Panel>}
     </div>
   );
 }

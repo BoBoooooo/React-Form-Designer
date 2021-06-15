@@ -13,7 +13,9 @@ interface contextType {
   setWidgetForm: (value: React.SetStateAction<formJsonType>) => void;
   addWidget: (item: object, dragIndex?: number | undefined) => void;
   deleteWidget: (index) => void;
-  cloneWidget: (com: object, index: number) => void;
+  deleteGridWidget: (rowIndex: number, colIndex: number, index: number) => void;
+  cloneWidget: (widget: object, index: number) => void;
+  cloneGridWidget: (widget: object, rowIndex: number, colIndex: number, index: number) => void;
 }
 
 export const FormContext = React.createContext<contextType>({
@@ -30,5 +32,7 @@ export const FormContext = React.createContext<contextType>({
   setWidgetForm: () => {},
   addWidget: () => {},
   deleteWidget: () => {},
+  deleteGridWidget: () => {},
   cloneWidget: () => {},
+  cloneGridWidget: () => {},
 });

@@ -46,19 +46,20 @@ export default function WidgetLayout({ index, component, selectedWidget, setSele
   };
 
   // 栅格内widget新增
-  const addGridWidget = (item, colIndex, currentIndex) => {
+  const addGridWidget = (item, rowIndex, colIndex) => {
     let newWidget;
-
-    currentIndex ? (newWidget = { ...item }) : (newWidget = widgetClone(item));
+    item.key ? (newWidget = { ...item }) : (newWidget = widgetClone(item));
 
     setWidgetForm(value => {
       const temp = { ...value };
-      const row = temp.list.find(com => com.key === component.key);
-      row.columns[colIndex].list.push(newWidget);
-      // 如果有currentIndex则表示为外侧容器某组件拖动至栅格布局内,需要删除外侧list中该组件
-      if (currentIndex) {
-        deleteWidget(currentIndex);
-      }
+      const row = temp.list[index];
+      const { list: colList } = row.columns[colIndex];
+      // 标明该组件目前是嵌套在栅格布局中
+      newWidget['_widget'] = 'Row';
+      newWidget['_rowIndex'] = rowIndex;
+      newWidget['_colIndex'] = colIndex;
+      newWidget['_index'] = colList.length;
+      colList.push(newWidget);
       return temp;
     });
   };
@@ -66,43 +67,48 @@ export default function WidgetLayout({ index, component, selectedWidget, setSele
   /**  start  拖拽相关代码 */
   const defaultBorderStyle = '1px dashed #ccc';
   const hoverBorderStyle = '3px solid #389e0d';
-
-  const drop = (ev, index) => {
+  const defaultColBgStyle = 'white';
+  const hoverColBgStyle = '#c9e4ff';
+  const changeDragStyle = (ev, type: 'hover' | 'default') => {
+    let { target: dom } = ev;
+    console.log(dom);
+    if (dom) {
+      if (dom.className.includes('widget-col-list')) {
+        dom.style['background'] = type === 'hover' ? hoverColBgStyle : defaultColBgStyle;
+      }
+      if (dom.className.includes('widget-view')) {
+        dom.style['border-bottom'] = type === 'hover' ? hoverBorderStyle : defaultBorderStyle;
+      }
+    }
+  };
+  const drop = (ev, rowIndex, colIndex) => {
     ev.preventDefault();
     ev.stopPropagation();
     const newWidget = JSON.parse(ev.dataTransfer.getData('Text'));
-    const currentIndex = newWidget.currentIndex;
-    delete newWidget.currentIndex;
-
-    if (ev.target && ev.target.className.includes('widget-col-list')) {
-      ev.target.style['border-bottom'] = defaultBorderStyle;
-    }
-    addGridWidget(newWidget, index, currentIndex);
+    changeDragStyle(ev, 'default');
+    addGridWidget(newWidget, rowIndex, colIndex);
     setSelectedWidget(newWidget);
   };
-
   const allowDrop = ev => {
-    if (ev.target && ev.target.className.includes('widget-col-list')) {
-      ev.target.style['border-bottom'] = hoverBorderStyle;
-    }
+    changeDragStyle(ev, 'hover');
     ev.preventDefault();
   };
 
   const onDragLeave = ev => {
-    if (ev.target.className.includes('widget-col-list')) {
-      ev.target.style['border-bottom'] = defaultBorderStyle;
-    }
+    changeDragStyle(ev, 'default');
   };
   /**  end  拖拽相关代码 */
 
   return (
     <div className={[styles['widget-col'], selectedWidget.key === component.key ? styles.active : null].join(' ')}>
       <Row onClick={handleSelect} gutter={component.options.gutter ? component.options.gutter : 0} justify={component.options.justify} align={component.options.align}>
-        {component.columns.map((col, index) => {
+        {component.columns.map((col, colIndex) => {
           return (
-            <Col onDrop={ev => drop(ev, index)} onDragOver={allowDrop} onDragLeave={onDragLeave} key={index} span={col.span ? col.span : 0} className={styles['widget-col-list']}>
+            <Col onDrop={ev => drop(ev, index, colIndex)} onDragOver={allowDrop} onDragLeave={onDragLeave} key={index} span={col.span ? col.span : 0} className={styles['widget-col-list']}>
               {col.list.map((el, i) => {
-                return <WidgetFormItem key={el.key} index={i} component={el} setSelectedWidget={setSelectedWidget} selectedWidget={selectedWidget}></WidgetFormItem>;
+                return (
+                  <WidgetFormItem rowIndex={index} colIndex={colIndex} key={el.key} index={i} component={el} setSelectedWidget={setSelectedWidget} selectedWidget={selectedWidget}></WidgetFormItem>
+                );
               })}
             </Col>
           );

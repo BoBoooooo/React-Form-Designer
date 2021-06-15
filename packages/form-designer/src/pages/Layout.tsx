@@ -3,7 +3,7 @@ import logo from '../assets/logo.svg';
 import styles from '../styles/app.module.scss';
 import { Divider, Layout, message, Modal, Form, Button } from 'antd';
 import Material from './components/Material';
-import Panel from './components/Panel';
+import WidgetForm from './components/WidgetForm';
 import WidgetConfig from './components/WidgetConfig';
 import * as Icon from '@ant-design/icons';
 import handleBtns from '../config/handleButtons';
@@ -60,9 +60,10 @@ const App = () => {
     });
     setSelectedWidget({});
   };
+  // 生成JSON按钮
   const handleGenerateJson = () => {
     form.setFieldsValue({
-      formJson: JSON.stringify(widgetForm),
+      formJson: JSON.stringify(widgetForm, null, '\t'),
     });
     setIsModalVisible(true);
   };
@@ -97,9 +98,13 @@ const App = () => {
     console.log('add', widget, dragIndex);
 
     // 如果有currentIndex代表是移动操作,不进行clone,直接移动位置即可
-    item.currentIndex ? (widget = { ...item }) : (widget = widgetClone(item));
-    // 删除移动前组件所在索引
-    delete widget.currentIndex;
+    item.key ? (widget = { ...item }) : (widget = widgetClone(item));
+
+    // 如果是栅格区域拖拽回外侧容器,清空临时标记位
+    delete widget._widget;
+    delete widget._rowIndex;
+    delete widget._colIndex;
+    delete widget._index;
 
     setWidgetForm(value => {
       const temp = { ...value };
@@ -114,6 +119,7 @@ const App = () => {
     });
   };
 
+  // 删除物料
   const deleteWidget = (index: number) => {
     setWidgetForm(value => {
       const temp = { ...value };
@@ -123,11 +129,39 @@ const App = () => {
     });
   };
 
+  // 复制物料
   const cloneWidget = (oldWidget, index) => {
     const newWidget = widgetClone(oldWidget);
     setWidgetForm(value => {
       const temp = { ...value };
       temp.list.splice(index + 1, 0, newWidget);
+      return temp;
+    });
+  };
+
+  // 复制栅格内物料
+  const cloneGridWidget = (oldWidget, rowIndex, colIndex, index) => {
+    const newWidget = widgetClone(oldWidget);
+    setWidgetForm(value => {
+      const temp = { ...value };
+      // 找到该栅格
+      const col = temp.list[rowIndex].columns[colIndex];
+      newWidget['_widget'] = 'Row';
+      newWidget['_rowIndex'] = rowIndex;
+      newWidget['_colIndex'] = colIndex;
+      newWidget['_index'] = index + 1;
+      col.list.splice(index + 1, 0, newWidget);
+      return temp;
+    });
+  };
+
+  // 删除Row栅格中的组件
+  const deleteGridWidget = (rowIndex, colIndex, index) => {
+    setWidgetForm(value => {
+      const temp = { ...value };
+      // 找到该栅格
+      const col = temp.list[rowIndex].columns[colIndex];
+      col.list.splice(index, 1);
       return temp;
     });
   };
@@ -142,8 +176,14 @@ const App = () => {
     if (selectedWidget && Object.keys(selectedWidget).length > 0) {
       setWidgetForm(value => {
         let temp = { ...value };
-        const index = temp.list.findIndex(_ => _.key === selectedWidget.key);
-        temp.list[index] = selectedWidget;
+        const { _widget, _rowIndex, _colIndex, _index } = selectedWidget;
+        if (_widget === 'Row') {
+          const col = temp.list[_rowIndex].columns[_colIndex];
+          col.list[_index] = selectedWidget;
+        } else {
+          const index = temp.list.findIndex(_ => _.key === selectedWidget.key);
+          temp.list[index] = selectedWidget;
+        }
         return temp;
       });
     }
@@ -158,7 +198,9 @@ const App = () => {
         setWidgetForm,
         addWidget,
         deleteWidget,
+        deleteGridWidget,
         cloneWidget,
+        cloneGridWidget,
       }}
     >
       <Layout className={styles['fd-container']}>
@@ -191,8 +233,12 @@ const App = () => {
           </Sider>
           {/* 设计面板 */}
           <Content className={styles['fd-container-content']}>
-            <Panel addWidget={addWidget} widgetForm={widgetForm} selectedWidget={selectedWidget} setSelectedWidget={setSelectedWidget}></Panel>
             {/* <FormGenerater data={widgetForm}></FormGenerater> */}
+            {status.includes('preview') ? (
+              <div>预览模式</div>
+            ) : (
+              <WidgetForm addWidget={addWidget} widgetForm={widgetForm} selectedWidget={selectedWidget} setSelectedWidget={setSelectedWidget}></WidgetForm>
+            )}
           </Content>
           {/* 配置区域 */}
           <Sider

@@ -92,7 +92,7 @@ const PropConfig = ({ setSelectedWidget, selectedWidget }) => {
     delete value.options;
     console.log('配置表单当前值', value);
     form.setFieldsValue(value);
-  }, [selectedWidget]);
+  }, [selectedWidget, isSelected, form]);
 
   return (
     <div>
@@ -149,7 +149,7 @@ const FormConfig = () => {
 
       return temp;
     });
-  }, [formSize, formLabelWidth, formLayout, formAlign]);
+  }, [formSize, formLabelWidth, formLayout, formAlign, setWidgetForm]);
 
   return (
     <div>
