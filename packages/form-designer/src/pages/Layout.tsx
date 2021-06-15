@@ -137,6 +137,7 @@ const App = () => {
       temp.list.splice(index + 1, 0, newWidget);
       return temp;
     });
+    message.success('复制成功');
   };
 
   // 复制栅格内物料
@@ -153,6 +154,7 @@ const App = () => {
       col.list.splice(index + 1, 0, newWidget);
       return temp;
     });
+    message.success('复制成功');
   };
 
   // 删除Row栅格中的组件

@@ -37,14 +37,11 @@ export default function WidgetFormItem({ component, setSelectedWidget, selectedW
   };
 
   const handleWidgetClone = () => {
-    console.log('复制组件,所在位置', rowIndex, colIndex);
-
     if (rowIndex !== null && colIndex !== null) {
       cloneGridWidget(component, rowIndex, colIndex, index);
     } else {
       cloneWidget(component, index);
     }
-    message.success('复制成功');
   };
   const handleWidgetDelete = () => {
     // 如果有值则表示该组件嵌套在栅格布局内
