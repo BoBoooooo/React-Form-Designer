@@ -32,10 +32,11 @@ export default function BFormItem({ component }) {
   return (
     <>
       <Form.Item
-        rules={[{ required: component.options.required }]}
+        rules={[{ required: component.options.required, pattern: new RegExp(component.options.validatorPattern), type: component.options.validatorType, message: component.options.validatorMessage }]}
         labelAlign={widgetForm.config.labelAlign}
         label={component.name}
         name={component.model}
+        tooltip={component.options.tooltip}
         valuePropName={getValuePropName(component.type)}
       >
         {React.createElement(AntdComs[component.type], getProps(component), component.options.text)}

@@ -13,8 +13,8 @@ import { FormContext as GlobalContext } from '../context/global';
 import AceEditor from 'react-ace';
 import 'ace-builds/src-noconflict/mode-json';
 import 'ace-builds/src-noconflict/theme-github';
-// import { FormGenerater } from '@bform/form-generater';
-import FormGenerater from './form-generater/BForm';
+// import { FormGenerater } from '@music/xform-generater';
+import FormGenerater from '../components/form-generater/BForm';
 import { CopyToClipboard } from 'react-copy-to-clipboard';
 
 const { Header, Sider, Content } = Layout;
@@ -98,7 +98,7 @@ const App = () => {
 
     console.log('add', widget, dragIndex);
 
-    // 如果有currentIndex代表是移动操作,不进行clone,直接移动位置即可
+    // 如果有key代表是移动操作,不进行clone,直接移动位置即可
     item.key ? (widget = { ...item }) : (widget = widgetClone(item));
 
     // 如果是栅格区域拖拽回外侧容器,清空临时标记位
@@ -106,6 +106,8 @@ const App = () => {
     delete widget._rowIndex;
     delete widget._colIndex;
     delete widget._index;
+    // 删除icon
+    delete widget.icon;
 
     setWidgetForm(value => {
       const temp = { ...value };
@@ -115,17 +117,24 @@ const App = () => {
       } else {
         temp.list.splice(dragIndex + 1, 0, widget);
       }
-      setSelectedWidget(widget);
+      // hack方法,防止异步问题导致setSelectedWidget不生效
+      setTimeout(() => {
+        setSelectedWidget(widget);
+      }, 0);
       return temp;
     });
   };
 
   // 删除物料
   const deleteWidget = (index: number) => {
+    console.log('删除,原先所在位置', index);
     setWidgetForm(value => {
       const temp = { ...value };
       temp.list.splice(index, 1);
-      setSelectedWidget({ ...(temp.list[index] || temp.list[index - 1]) });
+      // hack方法,防止异步问题导致setSelectedWidget不生效
+      setTimeout(() => {
+        setSelectedWidget({ ...(temp.list[index] || temp.list[index - 1]) });
+      }, 0);
       return temp;
     });
   };
@@ -147,7 +156,7 @@ const App = () => {
     setWidgetForm(value => {
       const temp = { ...value };
       // 找到该栅格
-      const col = temp.list[rowIndex].columns[colIndex];
+      const col = temp.list[rowIndex]?.columns[colIndex];
       newWidget['_widget'] = 'Row';
       newWidget['_rowIndex'] = rowIndex;
       newWidget['_colIndex'] = colIndex;
@@ -163,26 +172,29 @@ const App = () => {
     setWidgetForm(value => {
       const temp = { ...value };
       // 找到该栅格
-      const col = temp.list[rowIndex].columns[colIndex];
+      const col = temp.list[rowIndex]?.columns[colIndex];
       col.list.splice(index, 1);
       return temp;
     });
   };
 
   // 表单JSON改变回调
-  useEffect(() => {
-    console.log('当前表单json', widgetForm);
-  }, [widgetForm]);
+  // useEffect(() => {
+  //   console.log('当前表单json', widgetForm);
+  // }, [widgetForm]);
 
-  // 表单JSON改变回调
+  // 右侧字段配置回填到表单JSON中
   useEffect(() => {
     if (selectedWidget && Object.keys(selectedWidget).length > 0) {
       setWidgetForm(value => {
         let temp = { ...value };
         const { _widget, _rowIndex, _colIndex, _index } = selectedWidget;
+        console.log('回填JSON', selectedWidget);
         if (_widget === 'Row') {
-          const col = temp.list[_rowIndex].columns[_colIndex];
-          col.list[_index] = selectedWidget;
+          const col = temp.list[_rowIndex]?.columns[_colIndex];
+          if (col.list) {
+            col.list[_index] = selectedWidget;
+          }
         } else {
           const index = temp.list.findIndex(_ => _.key === selectedWidget.key);
           temp.list[index] = selectedWidget;
@@ -210,7 +222,7 @@ const App = () => {
         {/* 顶部导航区域 */}
         <Header className={styles['fd-container-header']}>
           <img src={logo} className={styles.logo} alt="logo" />
-          <span className={styles.title}>BForm</span>
+          <span className={styles.title}>BForm-Designer</span>
           {/* 操作按钮 */}
           <div className={styles['btn-bar']}>
             {handleBtns.map(btn => {

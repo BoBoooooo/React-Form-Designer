@@ -39,7 +39,6 @@ export default function Material() {
           </div>
         );
       })}
-      <div></div>
     </div>
   );
 }

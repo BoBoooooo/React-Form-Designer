@@ -7,7 +7,7 @@
 import React, { useContext } from 'react';
 import form_empty from '../../assets/form_empty.svg';
 import styles from '../../styles/panel.module.scss';
-import { Form, Button, Modal, ConfigProvider } from 'antd';
+import { Form, Modal, ConfigProvider } from 'antd';
 import WidgetFormItem from './WidgetFormItem';
 import { formJsonType } from '../../types/form';
 import { FormContext } from '../../context/global';
@@ -58,7 +58,7 @@ const Panel = (props: { widgetForm: formJsonType; selectedWidget: Record<string,
             }
           })}
           {/* Submit按钮 */}
-          <Form.Item
+          {/* <Form.Item
             wrapperCol={{
               offset: 22,
             }}
@@ -70,7 +70,7 @@ const Panel = (props: { widgetForm: formJsonType; selectedWidget: Record<string,
             <Button type="primary" htmlType="submit">
               获取表单值
             </Button>
-          </Form.Item>
+          </Form.Item> */}
         </Form>
       </ConfigProvider>
     </>
@@ -78,7 +78,7 @@ const Panel = (props: { widgetForm: formJsonType; selectedWidget: Record<string,
 };
 
 export default function WidgetForm(props) {
-  const { addWidget } = useContext(FormContext);
+  const { addWidget, deleteWidget } = useContext(FormContext);
 
   const defaultBorderStyle = '1px dashed rgba(170, 170, 170, 0.7)';
   const hoverBorderStyle = '3px solid #389e0d';
@@ -86,27 +86,31 @@ export default function WidgetForm(props) {
   const drop = ev => {
     ev.preventDefault();
     const data = JSON.parse(ev.dataTransfer.getData('Text'));
+    console.log('拖拽组件值', data);
     let dragIndex;
 
-    if (ev?.target?.className?.includes('widget-view')) {
+    if (typeof ev.target?.className === 'string' && ev.target?.className?.includes('widget-view')) {
       // 查找当前拖拽到的索引位置
       dragIndex = [].indexOf.call(ev.target.parentElement.children, ev.target as never);
-      console.log('拖拽物料至表单', data, dragIndex);
       ev.target.style['border-bottom'] = defaultBorderStyle;
     }
-
+    // 如果有_index表示是移动元素位置
+    if (data._index !== undefined && data._index !== null) {
+      console.log('move', '移动元素', '原先位置', data._index, '最新位置', dragIndex + 1);
+      deleteWidget(data._index);
+    }
     addWidget(data, dragIndex);
   };
 
   const allowDrop = ev => {
-    if (ev?.target?.className?.includes('widget-view')) {
+    if (typeof ev.target?.className === 'string' && ev.target?.className?.includes('widget-view')) {
       ev.target.style['border-bottom'] = hoverBorderStyle;
     }
     ev.preventDefault();
   };
 
   const onDragLeave = ev => {
-    if (ev.target.className.includes('widget-view')) {
+    if (typeof ev.target?.className === 'string' && ev.target?.className?.includes('widget-view')) {
       ev.target.style['border-bottom'] = defaultBorderStyle;
     }
   };

@@ -5,10 +5,11 @@
  * @Date: 2021-06-05 13:08:48
  */
 import React, { useState, useEffect, useContext, useMemo } from 'react';
-import { Form, Tabs, Radio, InputNumber, Input, Space, Button, Switch } from 'antd';
+import { Form, Tabs, Radio, InputNumber, Input, Space, Button, Switch, Select } from 'antd';
 import { FormContext } from '../../context/global';
 import optionsConfig from '../../config/optionsConfig';
 import { MinusCircleOutlined, PlusOutlined } from '@ant-design/icons';
+import validatorEnum from '../../utils/validator';
 
 const { Item } = Form;
 const { TabPane } = Tabs;
@@ -100,7 +101,7 @@ const PropConfig = ({ setSelectedWidget, selectedWidget }) => {
   return (
     <div>
       <Form layout="vertical" form={form} size="small" onValuesChange={onValuesChange}>
-        {isSelected && (
+        {isSelected && selectedWidget.type !== 'Row' && (
           <>
             <Item label="字段标识" name="model">
               <Input placeholder="请输入字段标识" />
@@ -127,6 +128,29 @@ const PropConfig = ({ setSelectedWidget, selectedWidget }) => {
           }
           return null;
         })}
+
+        {isSelected && selectedWidget.type !== 'Row' && (
+          <>
+            <Item label="提示语 (tooltip)" name="option_tooltip">
+              <Input allowClear placeholder="请输入tooltip提示"></Input>
+            </Item>
+            <Item label="校验类型" name="option_validatorType">
+              <Select
+                allowClear
+                options={validatorEnum.map(v => ({
+                  label: v,
+                  value: v,
+                }))}
+              ></Select>
+            </Item>
+            <Item label="自定义校验正则" name="option_validatorPattern">
+              <Input allowClear placeholder="例如: ^[a-z]+$"></Input>
+            </Item>
+            <Item label="自定义校验提示语" name="option_validatorMessage">
+              <Input allowClear placeholder="请输入校验提示语"></Input>
+            </Item>
+          </>
+        )}
       </Form>
     </div>
   );

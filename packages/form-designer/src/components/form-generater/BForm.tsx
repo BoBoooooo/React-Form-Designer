@@ -6,9 +6,9 @@
  */
 import React from 'react';
 import { Form, Button, Modal, ConfigProvider } from 'antd';
-import BFormItem from './BFormItem';
+import XFormItem from './BFormItem';
 import { formJsonType } from '../../types/form';
-import BFormLayout from './BFormLayout';
+import XFormLayout from './BFormLayout';
 import zhCN from 'antd/lib/locale/zh_CN';
 import moment from 'moment';
 import 'moment/locale/zh-cn';
@@ -32,9 +32,9 @@ export default function (props: { data: formJsonType }) {
           {widgetForm.list.map(component => {
             // 此处判断是栅格布局嵌套还是直接拖拽组件
             if (component.type === 'Row') {
-              return <BFormLayout key={component.key} component={component} {...props}></BFormLayout>;
+              return <XFormLayout key={component.key} component={component} {...props}></XFormLayout>;
             } else {
-              return <BFormItem key={component.key} component={component} {...props}></BFormItem>;
+              return <XFormItem key={component.key} component={component} {...props}></XFormItem>;
             }
           })}
           {/* Submit按钮 */}

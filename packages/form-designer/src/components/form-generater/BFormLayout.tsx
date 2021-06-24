@@ -7,7 +7,7 @@
 
 import React from 'react';
 import { Row, Col } from 'antd';
-import BFormItem from './BFormItem';
+import XFormItem from './BFormItem';
 
 export default function BFormLayout({ component }) {
   /**  end  拖拽相关代码 */
@@ -16,9 +16,9 @@ export default function BFormLayout({ component }) {
       <Row gutter={component.options.gutter ? component.options.gutter : 0} justify={component.options.justify} align={component.options.align}>
         {component.columns.map(col => {
           return (
-            <Col>
+            <Col flex={1}>
               {col.list.map(el => {
-                return <BFormItem key={el.key} component={el}></BFormItem>;
+                return <XFormItem key={el.key} component={el}></XFormItem>;
               })}
             </Col>
           );

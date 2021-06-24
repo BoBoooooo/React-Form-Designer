@@ -29,7 +29,7 @@ export default function WidgetLayout({ index, component, selectedWidget, setSele
       temp.list.forEach(com => {
         if (com.key === component.key) {
           component.columns.push({
-            span: 6,
+            span: 24,
             list: [],
           });
         }
@@ -73,12 +73,11 @@ export default function WidgetLayout({ index, component, selectedWidget, setSele
   const hoverColBgStyle = '#c9e4ff';
   const changeDragStyle = (ev, type: 'hover' | 'default') => {
     let { target: dom } = ev;
-    console.log(dom);
     if (dom) {
-      if (dom.className.includes('widget-col-list')) {
+      if (dom.className?.includes('widget-col-list')) {
         dom.style['background'] = type === 'hover' ? hoverColBgStyle : defaultColBgStyle;
       }
-      if (dom.className.includes('widget-view')) {
+      if (dom.className?.includes('widget-view')) {
         dom.style['border-bottom'] = type === 'hover' ? hoverBorderStyle : defaultBorderStyle;
       }
     }
@@ -86,8 +85,15 @@ export default function WidgetLayout({ index, component, selectedWidget, setSele
   const drop = (ev, rowIndex, colIndex) => {
     ev.preventDefault();
     ev.stopPropagation();
-    const newWidget = JSON.parse(ev.dataTransfer.getData('Text'));
+    const data = JSON.parse(ev.dataTransfer.getData('Text'));
+    const newWidget = data._index !== undefined ? data : widgetClone(data);
+    // 恢复可拖拽区域背景色
     changeDragStyle(ev, 'default');
+    // 添加至grid中,注意需要判断是左侧新拖拽的组件还是画板中已有组件拖拽
+    // 如果是已有组件拖拽，需要先从原先所在数组删除
+    if (newWidget._index) {
+      deleteWidget(newWidget._index);
+    }
     addGridWidget(newWidget, rowIndex, colIndex);
     setSelectedWidget(newWidget);
   };
@@ -102,11 +108,11 @@ export default function WidgetLayout({ index, component, selectedWidget, setSele
   /**  end  拖拽相关代码 */
 
   return (
-    <div className={[styles['widget-col'], selectedWidget.key === component.key ? styles.active : null].join(' ')}>
-      <Row onClick={handleSelect} gutter={component.options.gutter ? component.options.gutter : 0} justify={component.options.justify} align={component.options.align}>
+    <div onClick={handleSelect} className={[styles['widget-col'], selectedWidget.key === component.key ? styles.active : null].join(' ')}>
+      <Row gutter={component.options.gutter ? component.options.gutter : 0} justify={component.options.justify} align={component.options.align}>
         {component.columns.map((col, colIndex: number) => {
           return (
-            <Col onDrop={ev => drop(ev, index, colIndex)} onDragOver={allowDrop} onDragLeave={onDragLeave} key={index} span={col.span ? col.span : 0} className={styles['widget-col-list']}>
+            <Col flex={1} onDrop={ev => drop(ev, index, colIndex)} onDragOver={allowDrop} onDragLeave={onDragLeave} key={index} span={col.span ? col.span : 0} className={styles['widget-col-list']}>
               {col.list.map((el, i: number) => {
                 return (
                   <WidgetFormItem rowIndex={index} colIndex={colIndex} key={el.key} index={i} component={el} setSelectedWidget={setSelectedWidget} selectedWidget={selectedWidget}></WidgetFormItem>
