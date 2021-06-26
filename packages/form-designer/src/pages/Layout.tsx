@@ -117,12 +117,9 @@ const App = () => {
       } else {
         temp.list.splice(dragIndex + 1, 0, widget);
       }
-      // hack方法,防止异步问题导致setSelectedWidget不生效
-      setTimeout(() => {
-        setSelectedWidget(widget);
-      }, 0);
       return temp;
     });
+    setSelectedWidget(widget);
   };
 
   // 删除物料
@@ -131,12 +128,11 @@ const App = () => {
     setWidgetForm(value => {
       const temp = { ...value };
       temp.list.splice(index, 1);
-      // hack方法,防止异步问题导致setSelectedWidget不生效
-      setTimeout(() => {
-        setSelectedWidget({ ...(temp.list[index] || temp.list[index - 1]) });
-      }, 0);
+
       return temp;
     });
+    console.log({ ...(widgetForm.list[index] || widgetForm.list[index - 1]) });
+    setSelectedWidget({ ...(widgetForm.list[index] || widgetForm.list[index - 1]) });
   };
 
   // 复制物料

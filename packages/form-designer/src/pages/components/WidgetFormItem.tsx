@@ -41,7 +41,8 @@ export default function WidgetFormItem({ component, setSelectedWidget, selectedW
       cloneWidget(component, index);
     }
   };
-  const handleWidgetDelete = () => {
+  const handleWidgetDelete = ev => {
+    ev.stopPropagation();
     // 如果有值则表示该组件嵌套在栅格布局内
     console.log('删除组件,所在位置', rowIndex, colIndex);
     if (rowIndex !== null && colIndex !== null) {
