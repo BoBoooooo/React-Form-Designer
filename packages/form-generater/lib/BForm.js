@@ -28,10 +28,10 @@ export default function (props) {
                 widgetForm.list.map(component => {
                     // 此处判断是栅格布局嵌套还是直接拖拽组件
                     if (component.type === 'Row') {
-                        return React.createElement(BFormLayout, { key: component.key, component: component, ...props });
+                        return React.createElement(BFormLayout, Object.assign({ key: component.key, component: component }, props));
                     }
                     else {
-                        return React.createElement(BFormItem, { key: component.key, component: component, ...props });
+                        return React.createElement(BFormItem, Object.assign({ key: component.key, component: component }, props));
                     }
                 }),
                 React.createElement(Form.Item, { wrapperCol: {

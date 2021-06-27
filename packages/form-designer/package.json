@@ -29,31 +29,29 @@
     "url": "https://github.com/BoBoooooo/React-Form-Designer/issues"
   },
   "dependencies": {
-    "@ant-design/icons": "^4.6.2",
     "@bform/form-generater": "^0.1.0",
     "ace-builds": "^1.4.12",
-    "antd": "^4.16.0",
     "dva": "^2.4.1",
     "lodash": "^4.17.21",
-    "react": "^17.0.1",
     "react-ace": "^9.4.1",
     "react-copy-to-clipboard": "^5.0.3",
-    "react-dom": "^17.0.1",
     "react-scripts": "3.4.3"
   },
   "devDependencies": {
     "@types/lodash": "^4.14.170",
-    "@types/node": "^15.6.1",
-    "@types/react": "^17.0.8",
-    "@types/react-dom": "^17.0.5",
     "eslint": "^6.7.2",
     "eslint-config-prettier": "^8.3.0",
     "eslint-plugin-prettier": "^3.4.0",
     "node-sass": "^4.14.1",
     "prettier": "2.3.0",
     "react-app-rewired": "^2.1.6",
-    "replace": "^1.2.1",
-    "typescript": "^4.3.2"
+    "replace": "^1.2.1"
+  },
+  "peerDependencies": {
+    "react": ">=17.0.1",
+    "react-dom": ">=17.0.1",
+    "antd": ">=4.16.0",
+    "@ant-design/icons": ">=4.6.2"
   },
   "browserslist": {
     "production": [

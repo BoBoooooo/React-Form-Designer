@@ -26,7 +26,7 @@ export default function Material() {
         return (
           <div key={com.label} className={styles.wrapper}>
             <div className={styles.title}>{com.label}</div>
-            {com.list.map(item => {
+            {(com.list as any).map(item => {
               return (
                 <div key={item.type} className={styles.component} draggable onDragStart={ev => onDragStart(ev, item)} onClick={() => add(item)}>
                   {React.createElement(Icon[item.icon], {
