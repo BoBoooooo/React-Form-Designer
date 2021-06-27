@@ -4,13 +4,11 @@
  * @copyright: BoBo
  * @Date: 2021-06-05 21:30:28
  */
-import React, { useContext } from 'react';
+import React from 'react';
 import { Form } from 'antd';
 import AntdComs from './config/componentsConfig';
-import { FormContext } from './context/global';
 
 export default function BFormItem({ component }) {
-  const { widgetForm } = useContext(FormContext);
 
   const getValuePropName = type => {
     return type === 'Switch' ? 'checked' : 'value';
@@ -33,7 +31,6 @@ export default function BFormItem({ component }) {
     <>
       <Form.Item
         rules={[{ required: component.options.required }]}
-        labelAlign={widgetForm.config.labelAlign}
         label={component.name}
         name={component.model}
         valuePropName={getValuePropName(component.type)}

@@ -29,8 +29,7 @@ export default function (props: { widgetForm: formJsonType }) {
     <>
       <ConfigProvider locale={zhCN}>
         <Form labelCol={{ style: { width: widgetForm.config.labelWidth } }} layout={widgetForm.config.labelPosition} size={widgetForm.config.size} form={form} initialValues={{}} onFinish={onFinish}>
-          {widgetForm.list.map(component => {
-            // 此处判断是栅格布局嵌套还是直接拖拽组件
+          {widgetForm.list.map(component => {     // 此处判断是栅格布局嵌套还是直接拖拽组件
             if (component.type === 'Row') {
               return <BFormLayout key={component.key} component={component} {...props}></BFormLayout>;
             } else {
