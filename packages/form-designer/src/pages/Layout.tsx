@@ -300,7 +300,7 @@ const App = () => {
                     } else {
                       callback();
                     }
-                  } catch (err) {
+                  } catch (err: any) {
                     callback(err);
                   }
                 },
